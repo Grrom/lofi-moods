@@ -1,13 +1,16 @@
-@import "./overrides.scss";
 @import "./variables.scss";
 @import "./mixins.scss";
 
 .bg-white {
-  background-color: $white;
+  background-color: white;
 }
 
 .rounded-border {
   border-radius: 8px;
+}
+
+.circular-border {
+  border-radius: 40px;
 }
 
 .box-shadow {
@@ -15,11 +18,11 @@
 }
 
 .box-shadow-darker {
-  box-shadow: 0em 0em 1em $black;
+  box-shadow: 0em 0em 1em black;
 }
 
 .default-padding {
-  padding: 16px;
+  padding: 20px;
 }
 
 .default-margin {

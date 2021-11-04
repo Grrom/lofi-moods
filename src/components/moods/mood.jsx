@@ -1,8 +1,3 @@
-
 export default function Mood({ name }) {
-    return (
-        <div>
-            {name}
-        </div>
-    )
+  return <div className="mood">{name}</div>;
 }

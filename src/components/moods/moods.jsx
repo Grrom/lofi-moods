@@ -2,13 +2,15 @@ import Mood from "./mood";
 import "./moods.scss";
 
 export default function Moods() {
-  const moods = ["Relax", "Chill", "Study", "Sleep"];
+  const moods = ["Chill", "Study", "Sleep", "Sad", "Happy"];
 
   return (
     <div id="moods">
-      {moods.map((value) => (
-        <Mood name={value}></Mood>
-      ))}
+      {moods
+        .sort((a, b) => a > b)
+        .map((value) => (
+          <Mood name={value}></Mood>
+        ))}
     </div>
   );
 }
