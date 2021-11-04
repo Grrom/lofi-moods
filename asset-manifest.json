@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/lofi-moods/static/css/main.283a0677.chunk.css",
+    "main.js": "/lofi-moods/static/js/main.6ae9569b.chunk.js",
+    "main.js.map": "/lofi-moods/static/js/main.6ae9569b.chunk.js.map",
+    "runtime-main.js": "/lofi-moods/static/js/runtime-main.49c10ae9.js",
+    "runtime-main.js.map": "/lofi-moods/static/js/runtime-main.49c10ae9.js.map",
+    "static/js/2.798e459f.chunk.js": "/lofi-moods/static/js/2.798e459f.chunk.js",
+    "static/js/2.798e459f.chunk.js.map": "/lofi-moods/static/js/2.798e459f.chunk.js.map",
+    "static/js/3.d25eb32f.chunk.js": "/lofi-moods/static/js/3.d25eb32f.chunk.js",
+    "static/js/3.d25eb32f.chunk.js.map": "/lofi-moods/static/js/3.d25eb32f.chunk.js.map",
+    "index.html": "/lofi-moods/index.html",
+    "static/css/main.283a0677.chunk.css.map": "/lofi-moods/static/css/main.283a0677.chunk.css.map",
+    "static/js/2.798e459f.chunk.js.LICENSE.txt": "/lofi-moods/static/js/2.798e459f.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.49c10ae9.js",
+    "static/js/2.798e459f.chunk.js",
+    "static/css/main.283a0677.chunk.css",
+    "static/js/main.6ae9569b.chunk.js"
+  ]
+}
