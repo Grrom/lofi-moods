@@ -1,0 +1,45 @@
+@import "./overrides.scss";
+@import "./variables.scss";
+@import "./mixins.scss";
+
+.bg-white {
+  background-color: $white;
+}
+
+.rounded-border {
+  border-radius: 8px;
+}
+
+.box-shadow {
+  box-shadow: 0em 0em 1em $blackLight;
+}
+
+.box-shadow-darker {
+  box-shadow: 0em 0em 1em $black;
+}
+
+.default-padding {
+  padding: 16px;
+}
+
+.default-margin {
+  margin: 16px;
+}
+
+.error-text {
+  color: $red;
+}
+
+.button-primary {
+  background-color: $primary;
+}
+
+.no-select {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
