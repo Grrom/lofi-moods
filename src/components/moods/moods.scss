@@ -1,20 +1,33 @@
 @import "../../styles/presets";
 @import "../../styles/hovers";
 
-#moods {
+#parent {
   position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 100vh;
-  width: 20vw;
+  width: 100vw;
   top: 0;
-  left: 0;
-  text-align: center;
 
-  .mood {
-    @extend .bg-white;
-    @extend .box-shadow;
-    @extend .circular-border;
-    @extend .default-padding;
-    @extend .default-margin;
-    @extend .clickable;
+  #moods {
+    position: absolute;
+    height: 100vh;
+    width: 20vw;
+    top: 0;
+    left: 0;
+    text-align: center;
+
+    .mood {
+      @extend .bg-white;
+      @extend .box-shadow;
+      @extend .circular-border;
+      @extend .default-padding;
+      @extend .default-margin;
+      @extend .clickable;
+    }
+  }
+
+  .react-player {
+    display: none;
   }
 }

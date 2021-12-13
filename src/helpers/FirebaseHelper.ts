@@ -1,10 +1,4 @@
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  DocumentData,
-} from "firebase/firestore";
+import { collection, getDocs, DocumentData } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { Music } from "../types/music";
 
@@ -13,13 +7,8 @@ export default class FireBaseHelper {
 
   fetchMusic = async (mood: string) => {
     console.log("fetching" + mood);
-    const querySnapshot = await getDocs(
-      query(
-        collection(this.firestore, "music"),
-        where("mood", "==", mood.toLowerCase())
-      )
-    );
-    let datas: Array<DocumentData> = [];
+    const querySnapshot = await getDocs(collection(this.firestore, mood));
+    let datas: Array<Music> = [];
     querySnapshot.forEach((doc) => {
       let data = doc.data();
       datas.push(new Music(data.artist, data.link, data.title, doc.id));
