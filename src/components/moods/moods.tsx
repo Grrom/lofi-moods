@@ -1,28 +1,43 @@
 import { useState } from "react";
 import ReactPlayer from "react-player/youtube";
+import { Music } from "../../types/music";
 import Mood from "./mood";
 import "./moods.scss";
 
-import play from "../../assets/play.svg";
-import pause from "../../assets/pause.svg";
+interface _props {
+  setBottomMessage: (message: string) => void;
+}
 
-export default function Moods() {
-  const moods = ["happy", "lonely", "relax", "sleep"];
-  const [playIcon, setPlayIcon] = useState(play);
-  const [bottomPreview, setBottomPreview] = useState("How are you today?");
+export default function Moods({ setBottomMessage }: _props) {
+  const moods = [
+    "happy",
+    "lonely",
+    "relax",
+    "sleep",
+    "haha",
+    "haha",
+    "haha",
+    "haha",
+    "haha",
+    "haha",
+    "haha",
+    "haha",
+    "haha",
+    "haha",
+  ];
   const [isPlaying, setIsPlaying] = useState(false);
-  const [musicId, setMusicId] = useState("");
+  const [isMuted, setIsMuted] = useState(false);
+  const [music, setMusic] = useState<Music>();
   const [bg, setBg] = useState(
     "https://i.ytimg.com/vi/_ITiwPMUzho/maxresdefault.jpg"
   );
 
-  function playMusic(musicId: string) {
-    setMusicId(() => musicId);
-    checkAndSetBg(musicId);
+  function playMusic(music: Music) {
+    setMusic(() => music);
     setIsPlaying(() => true);
     console.log(isPlaying);
   }
-  function checkAndSetBg(musicId: string) {
+  function checkAndSetBg(musicId?: string) {
     let image = new Image();
     image.src = `https://i.ytimg.com/vi/${musicId}/maxresdefault.jpg`;
     image.onload = function () {
@@ -43,18 +58,17 @@ export default function Moods() {
         <ReactPlayer
           className="react-player"
           onStart={() => {
-            setBottomPreview("Now Playing: " + musicId);
-            checkAndSetBg(musicId);
+            setBottomMessage("Now Playing: " + music?.title);
+            checkAndSetBg(music?.link);
           }}
           onError={() =>
-            setBottomPreview("Something went wrong while fetching the music")
+            setBottomMessage("Something went wrong while fetching the music")
           }
-          onPlay={() => setPlayIcon(play)}
-          onPause={() => setPlayIcon(pause)}
           playing={isPlaying}
+          muted={isMuted}
           controls={true}
           autoPlay={true}
-          url={`https://www.youtube.com/watch?v=${musicId}`}
+          url={`https://www.youtube.com/watch?v=${music?.link}`}
           loop={true}
           config={{
             playerVars: {

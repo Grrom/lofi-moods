@@ -1,5 +1,8 @@
 import "./bottom-indicator.scss";
 
-export default function BottomIndicator() {
-  return <div id="bottom-indicator">Bottom</div>;
+interface _props {
+  message: string;
+}
+export default function BottomIndicator({ message }: _props) {
+  return <div id="bottom-indicator">{message}</div>;
 }

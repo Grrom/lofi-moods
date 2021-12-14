@@ -3,7 +3,7 @@ import { Music } from "../../types/music";
 
 interface _props {
   mood: string;
-  playMusic: (musicId: string) => void;
+  playMusic: (music: Music) => void;
 }
 export default function Mood({ mood, playMusic }: _props) {
   return (
@@ -12,7 +12,7 @@ export default function Mood({ mood, playMusic }: _props) {
       onClick={async () => {
         let musicList: Array<Music> = await fireBaseHelper.fetchMusic(mood);
         playMusic(
-          musicList[Math.floor(Math.random() * (musicList.length - 0))].link
+          musicList[Math.floor(Math.random() * (musicList.length - 0))]
         );
       }}
     >
