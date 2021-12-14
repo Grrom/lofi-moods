@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/lofi-moods/static/css/main.4435f4ef.chunk.css",
-    "main.js": "/lofi-moods/static/js/main.17ee1023.chunk.js",
-    "main.js.map": "/lofi-moods/static/js/main.17ee1023.chunk.js.map",
-    "runtime-main.js": "/lofi-moods/static/js/runtime-main.e7385e01.js",
-    "runtime-main.js.map": "/lofi-moods/static/js/runtime-main.e7385e01.js.map",
-    "static/js/2.dc39b3ad.chunk.js": "/lofi-moods/static/js/2.dc39b3ad.chunk.js",
-    "static/js/2.dc39b3ad.chunk.js.map": "/lofi-moods/static/js/2.dc39b3ad.chunk.js.map",
-    "static/js/3.7a79431d.chunk.js": "/lofi-moods/static/js/3.7a79431d.chunk.js",
-    "static/js/3.7a79431d.chunk.js.map": "/lofi-moods/static/js/3.7a79431d.chunk.js.map",
+    "main.css": "/lofi-moods/static/css/main.6a305030.chunk.css",
+    "main.js": "/lofi-moods/static/js/main.232054e9.chunk.js",
+    "main.js.map": "/lofi-moods/static/js/main.232054e9.chunk.js.map",
+    "runtime-main.js": "/lofi-moods/static/js/runtime-main.596a6c77.js",
+    "runtime-main.js.map": "/lofi-moods/static/js/runtime-main.596a6c77.js.map",
+    "static/js/2.c8144161.chunk.js": "/lofi-moods/static/js/2.c8144161.chunk.js",
+    "static/js/2.c8144161.chunk.js.map": "/lofi-moods/static/js/2.c8144161.chunk.js.map",
+    "static/js/3.c034db94.chunk.js": "/lofi-moods/static/js/3.c034db94.chunk.js",
+    "static/js/3.c034db94.chunk.js.map": "/lofi-moods/static/js/3.c034db94.chunk.js.map",
     "index.html": "/lofi-moods/index.html",
-    "static/css/main.4435f4ef.chunk.css.map": "/lofi-moods/static/css/main.4435f4ef.chunk.css.map",
-    "static/js/2.dc39b3ad.chunk.js.LICENSE.txt": "/lofi-moods/static/js/2.dc39b3ad.chunk.js.LICENSE.txt",
-    "static/media/pause.7eb12db0.svg": "/lofi-moods/static/media/pause.7eb12db0.svg",
-    "static/media/play.20181f97.svg": "/lofi-moods/static/media/play.20181f97.svg"
+    "static/css/main.6a305030.chunk.css.map": "/lofi-moods/static/css/main.6a305030.chunk.css.map",
+    "static/js/2.c8144161.chunk.js.LICENSE.txt": "/lofi-moods/static/js/2.c8144161.chunk.js.LICENSE.txt",
+    "static/media/mute.d7f38ca3.svg": "/lofi-moods/static/media/mute.d7f38ca3.svg",
+    "static/media/unMute.8a278345.svg": "/lofi-moods/static/media/unMute.8a278345.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.e7385e01.js",
-    "static/js/2.dc39b3ad.chunk.js",
-    "static/css/main.4435f4ef.chunk.css",
-    "static/js/main.17ee1023.chunk.js"
+    "static/js/runtime-main.596a6c77.js",
+    "static/js/2.c8144161.chunk.js",
+    "static/css/main.6a305030.chunk.css",
+    "static/js/main.232054e9.chunk.js"
   ]
 }
