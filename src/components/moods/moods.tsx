@@ -1,30 +1,19 @@
 import { useState } from "react";
 import ReactPlayer from "react-player/youtube";
 import { Music } from "../../types/music";
+import { ActionButton } from "../misc/action-button/action-button";
 import Mood from "./mood";
 import "./moods.scss";
+
+import mute from "../../assets/mute.svg";
+import unMute from "../../assets/unMute.svg";
 
 interface _props {
   setBottomMessage: (message: string) => void;
 }
 
 export default function Moods({ setBottomMessage }: _props) {
-  const moods = [
-    "happy",
-    "lonely",
-    "relax",
-    "sleep",
-    "haha",
-    "haha",
-    "haha",
-    "haha",
-    "haha",
-    "haha",
-    "haha",
-    "haha",
-    "haha",
-    "haha",
-  ];
+  const moods = ["happy", "lonely", "relax", "sleep"];
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [music, setMusic] = useState<Music>();
@@ -35,7 +24,6 @@ export default function Moods({ setBottomMessage }: _props) {
   function playMusic(music: Music) {
     setMusic(() => music);
     setIsPlaying(() => true);
-    console.log(isPlaying);
   }
   function checkAndSetBg(musicId?: string) {
     let image = new Image();
@@ -51,6 +39,13 @@ export default function Moods({ setBottomMessage }: _props) {
 
   return (
     <div id="parent" style={{ backgroundImage: `url(${bg})` }}>
+      <ActionButton
+        onClick={() => setIsMuted((current) => !current)}
+        isLoading={false}
+        text={""}
+        icon={isMuted ? mute : unMute}
+        className="mute-button"
+      />
       <div id="moods">
         {moods.map((value) => (
           <Mood mood={value} playMusic={playMusic}></Mood>

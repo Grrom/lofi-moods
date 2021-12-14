@@ -1,4 +1,4 @@
-import { collection, getDocs, DocumentData } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { Music } from "../types/music";
 
