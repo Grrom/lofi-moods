@@ -18,9 +18,15 @@ initializeApp({
 export const fireBaseHelper = new FireBaseHelper();
 
 function App() {
+  const [isBuffering, setIsBuffering] = useState(false);
   const [bottomMessage, setBottomMessage] = useState(
     "Hello, How are you today?"
   );
+
+  function _setIsBuffering(isBuffering: boolean) {
+    console.log(isBuffering);
+    setIsBuffering(() => isBuffering);
+  }
 
   function _setBottomMessage(message: string) {
     setBottomMessage(() => message);
@@ -28,8 +34,11 @@ function App() {
 
   return (
     <div id="app">
-      <Moods setBottomMessage={_setBottomMessage}></Moods>
-      <BottomIndicator message={bottomMessage} />
+      <Moods
+        setBottomMessage={_setBottomMessage}
+        setIsBuffering={_setIsBuffering}
+      ></Moods>
+      <BottomIndicator message={bottomMessage} isBuffering={isBuffering} />
     </div>
   );
 }

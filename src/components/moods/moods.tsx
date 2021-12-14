@@ -10,9 +10,10 @@ import unMute from "../../assets/unMute.svg";
 
 interface _props {
   setBottomMessage: (message: string) => void;
+  setIsBuffering: (isBuffering: boolean) => void;
 }
 
-export default function Moods({ setBottomMessage }: _props) {
+export default function Moods({ setBottomMessage, setIsBuffering }: _props) {
   const moods = ["happy", "lonely", "relax", "sleep"];
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -59,6 +60,8 @@ export default function Moods({ setBottomMessage }: _props) {
           onError={() =>
             setBottomMessage("Something went wrong while fetching the music")
           }
+          onBuffer={() => setIsBuffering(true)}
+          onBufferEnd={() => setIsBuffering(false)}
           playing={isPlaying}
           muted={isMuted}
           controls={true}
