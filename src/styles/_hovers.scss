@@ -10,6 +10,14 @@
 
 // individual
 
+.shadow-inset {
+  box-shadow: 0 0 20px #fff inset;
+}
+
+.hover-shadow-inset:hover {
+  @extend .shadow-inset;
+}
+
 .hover-highlight:hover {
   @include desktop {
     background-color: $secondaryLight;

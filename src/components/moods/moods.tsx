@@ -16,6 +16,7 @@ interface _props {
 export default function Moods({ setBottomMessage, setIsBuffering }: _props) {
   const moods = ["happy", "lonely", "relax", "sleep"];
   const [isPlaying, setIsPlaying] = useState(false);
+  const [selected, setSelected] = useState("");
   const [isMuted, setIsMuted] = useState(false);
   const [music, setMusic] = useState<Music>();
   const [bg, setBg] = useState(
@@ -49,7 +50,13 @@ export default function Moods({ setBottomMessage, setIsBuffering }: _props) {
       />
       <div id="moods">
         {moods.map((value) => (
-          <Mood mood={value} playMusic={playMusic} key={value}></Mood>
+          <Mood
+            onClick={() => setSelected(value)}
+            mood={value}
+            playMusic={playMusic}
+            key={value}
+            isSelected={selected === value}
+          ></Mood>
         ))}
         <ReactPlayer
           className="react-player"

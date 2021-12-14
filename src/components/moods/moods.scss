@@ -38,13 +38,21 @@
       width: 80%;
       min-width: 250px;
       max-width: 350px;
+      background-color: rgba($bg-dark, 0.6);
+      font-weight: bold;
+      color: #fff;
+      text-transform: capitalize;
+      text-align: center;
 
-      @extend .bg-white;
-      @extend .box-shadow;
+      @extend .hover-shadow-inset;
       @extend .circular-border;
       @extend .default-padding;
       @extend .default-margin;
       @extend .clickable;
+    }
+
+    .active {
+      @extend .shadow-inset;
     }
   }
 
