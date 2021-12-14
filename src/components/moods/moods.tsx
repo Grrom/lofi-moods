@@ -49,7 +49,7 @@ export default function Moods({ setBottomMessage, setIsBuffering }: _props) {
       />
       <div id="moods">
         {moods.map((value) => (
-          <Mood mood={value} playMusic={playMusic}></Mood>
+          <Mood mood={value} playMusic={playMusic} key={value}></Mood>
         ))}
         <ReactPlayer
           className="react-player"
