@@ -11,13 +11,22 @@
 
   #moods {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     height: 100vh;
-    width: 20vw;
+    width: 100vw;
     top: 0;
     left: 0;
-    text-align: center;
 
+    @include desktop {
+      max-width: 400px;
+    }
     .mood {
+      width: 80%;
+      min-width: 250px;
+      max-width: 350px;
+
       @extend .bg-white;
       @extend .box-shadow;
       @extend .circular-border;
