@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/lofi-moods/static/css/main.6a305030.chunk.css",
+    "main.css": "/lofi-moods/static/css/main.a6fb7ddc.chunk.css",
     "main.js": "/lofi-moods/static/js/main.232054e9.chunk.js",
     "main.js.map": "/lofi-moods/static/js/main.232054e9.chunk.js.map",
     "runtime-main.js": "/lofi-moods/static/js/runtime-main.596a6c77.js",
@@ -10,7 +10,7 @@
     "static/js/3.c034db94.chunk.js": "/lofi-moods/static/js/3.c034db94.chunk.js",
     "static/js/3.c034db94.chunk.js.map": "/lofi-moods/static/js/3.c034db94.chunk.js.map",
     "index.html": "/lofi-moods/index.html",
-    "static/css/main.6a305030.chunk.css.map": "/lofi-moods/static/css/main.6a305030.chunk.css.map",
+    "static/css/main.a6fb7ddc.chunk.css.map": "/lofi-moods/static/css/main.a6fb7ddc.chunk.css.map",
     "static/js/2.c8144161.chunk.js.LICENSE.txt": "/lofi-moods/static/js/2.c8144161.chunk.js.LICENSE.txt",
     "static/media/mute.d7f38ca3.svg": "/lofi-moods/static/media/mute.d7f38ca3.svg",
     "static/media/unMute.8a278345.svg": "/lofi-moods/static/media/unMute.8a278345.svg"
@@ -18,7 +18,7 @@
   "entrypoints": [
     "static/js/runtime-main.596a6c77.js",
     "static/js/2.c8144161.chunk.js",
-    "static/css/main.6a305030.chunk.css",
+    "static/css/main.a6fb7ddc.chunk.css",
     "static/js/main.232054e9.chunk.js"
   ]
 }
