@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactPlayer from "react-player/youtube";
 import { Music } from "../../types/music";
 import { ActionButton } from "../misc/action-button/action-button";
@@ -7,6 +7,7 @@ import "./moods.scss";
 
 import mute from "../../assets/mute.svg";
 import unMute from "../../assets/unMute.svg";
+import { fireBaseHelper } from "../../App";
 
 interface _props {
   setBottomMessage: (message: string) => void;
@@ -14,7 +15,7 @@ interface _props {
 }
 
 export default function Moods({ setBottomMessage, setIsBuffering }: _props) {
-  const moods = ["happy", "lonely", "relax", "sleep"];
+  const [moods, setMoods] = useState([] as Array<string>);
   const [isPlaying, setIsPlaying] = useState(false);
   const [selected, setSelected] = useState("");
   const [isMuted, setIsMuted] = useState(false);
@@ -22,6 +23,15 @@ export default function Moods({ setBottomMessage, setIsBuffering }: _props) {
   const [bg, setBg] = useState(
     "https://i.ytimg.com/vi/_ITiwPMUzho/maxresdefault.jpg"
   );
+
+  useEffect(() => {
+    async function fetchMoods() {
+      let fetchedMoods = await fireBaseHelper.fetchMoods();
+      setMoods(() => fetchedMoods);
+    }
+
+    fetchMoods();
+  }, []);
 
   function playMusic(music: Music) {
     setMusic(() => music);
