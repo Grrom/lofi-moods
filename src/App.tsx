@@ -8,6 +8,8 @@ import BufferingProvider from "./global-state/buffering-provider";
 import BottomMessageProvider from "./global-state/bottom-message-provider";
 import Controls from "./components/controls/controls";
 import MutedProvider from "./global-state/muted-provider";
+import ModalProvider from "./global-state/profile-modal-provider";
+import LoginSignup from "./components/profile/login-signup";
 
 initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
@@ -27,8 +29,11 @@ function App() {
       <BufferingProvider>
         <BottomMessageProvider>
           <MutedProvider>
-            <Controls />
-            <Moods />
+            <ModalProvider>
+              <Controls />
+              <Moods />
+              <LoginSignup />
+            </ModalProvider>
           </MutedProvider>
           <BottomIndicator />
         </BottomMessageProvider>
