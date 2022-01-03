@@ -1,13 +1,12 @@
-import { useContext } from "react";
-import { BufferingContext } from "../../global-state/buffering-provider";
+import { useBottomMessage } from "../../global-state/bottom-message-provider";
+import { useBuffering } from "../../global-state/buffering-provider";
 import { MiniLoader } from "../misc/loader/loader";
 import "./bottom-indicator.scss";
 
-interface _props {
-  message: string;
-}
-export default function BottomIndicator({ message }: _props) {
-  const isBuffering = useContext(BufferingContext);
+export default function BottomIndicator() {
+  const isBuffering = useBuffering();
+  const message = useBottomMessage();
+
   return (
     <span id="bottom-indicator">
       {message}

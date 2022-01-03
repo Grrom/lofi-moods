@@ -9,12 +9,9 @@ import mute from "../../assets/mute.svg";
 import unMute from "../../assets/unMute.svg";
 import { fireBaseHelper } from "../../App";
 import { useBufferingUpdate } from "../../global-state/buffering-provider";
+import { useBottomMessageUpdate } from "../../global-state/bottom-message-provider";
 
-interface _props {
-  setBottomMessage: (message: string) => void;
-}
-
-export default function Moods({ setBottomMessage }: _props) {
+export default function Moods() {
   const [moods, setMoods] = useState([] as Array<string>);
   const [isPlaying, setIsPlaying] = useState(false);
   const [selected, setSelected] = useState("");
@@ -34,10 +31,12 @@ export default function Moods({ setBottomMessage }: _props) {
   }, []);
 
   const setIsBuffering = useBufferingUpdate();
+  const setBottomMessage = useBottomMessageUpdate();
 
   function playMusic(music: Music) {
     setMusic(() => music);
     setIsPlaying(() => true);
+    setBottomMessage(`Fetching: ${music.title}`);
   }
   function checkAndSetBg(musicId?: string) {
     let image = new Image();

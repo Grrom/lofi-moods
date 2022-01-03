@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useContext } from "react";
 
 export const BufferingContext = React.createContext(false);
-export const BufferingContextUpdate = React.createContext((value: boolean) => {
-  console.log(value);
-});
+export const BufferingContextUpdate = React.createContext(
+  (value: boolean) => {}
+);
 
 export function useBuffering() {
   return useContext(BufferingContext);
@@ -15,7 +15,7 @@ export function useBufferingUpdate() {
 }
 
 interface _props {
-  children: Array<JSX.Element>;
+  children: JSX.Element;
 }
 
 export default function BufferingProvider({ children }: _props) {

@@ -4,8 +4,8 @@ import Moods from "./components/moods/moods";
 import FireBaseHelper from "./helpers/FirebaseHelper";
 import { initializeApp } from "firebase/app";
 import BottomIndicator from "./components/bottom-indicator/bottom-indicator";
-import { useState } from "react";
 import BufferingProvider from "./global-state/buffering-provider";
+import BottomMessageProvider from "./global-state/bottom-message-provider";
 
 initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
@@ -20,19 +20,13 @@ initializeApp({
 export const fireBaseHelper = new FireBaseHelper();
 
 function App() {
-  const [bottomMessage, setBottomMessage] = useState(
-    "Hello, How are you today?"
-  );
-
-  function _setBottomMessage(message: string) {
-    setBottomMessage(() => message);
-  }
-
   return (
     <div id="app">
       <BufferingProvider>
-        <Moods setBottomMessage={_setBottomMessage}></Moods>
-        <BottomIndicator message={bottomMessage} />
+        <BottomMessageProvider>
+          <Moods></Moods>
+          <BottomIndicator />
+        </BottomMessageProvider>
       </BufferingProvider>
     </div>
   );
