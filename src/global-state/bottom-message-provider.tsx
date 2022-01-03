@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useContext } from "react";
+import { providerProps } from "../types/interfaces";
 
 export const BottomMessageContext = React.createContext("");
 export const BottomMessageContextUpdate = React.createContext(
@@ -14,11 +15,7 @@ export function useBottomMessageUpdate() {
   return useContext(BottomMessageContextUpdate);
 }
 
-interface _props {
-  children: Array<JSX.Element>;
-}
-
-export default function BottomMessageProvider({ children }: _props) {
+export default function BottomMessageProvider({ children }: providerProps) {
   const [bottomMessage, setBottomMessage] = useState(
     "Hello, How are you today?"
   );

@@ -6,6 +6,8 @@ import { initializeApp } from "firebase/app";
 import BottomIndicator from "./components/bottom-indicator/bottom-indicator";
 import BufferingProvider from "./global-state/buffering-provider";
 import BottomMessageProvider from "./global-state/bottom-message-provider";
+import Controls from "./components/controls/controls";
+import MutedProvider from "./global-state/muted-provider";
 
 initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
@@ -24,7 +26,10 @@ function App() {
     <div id="app">
       <BufferingProvider>
         <BottomMessageProvider>
-          <Moods></Moods>
+          <MutedProvider>
+            <Controls />
+            <Moods />
+          </MutedProvider>
           <BottomIndicator />
         </BottomMessageProvider>
       </BufferingProvider>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useContext } from "react";
+import { providerProps } from "../types/interfaces";
 
 export const BufferingContext = React.createContext(false);
 export const BufferingContextUpdate = React.createContext(
@@ -14,11 +15,7 @@ export function useBufferingUpdate() {
   return useContext(BufferingContextUpdate);
 }
 
-interface _props {
-  children: JSX.Element;
-}
-
-export default function BufferingProvider({ children }: _props) {
+export default function BufferingProvider({ children }: providerProps) {
   const [isBuffering, setIsBuffering] = useState(false);
   function toggleBuffering(value: boolean) {
     setIsBuffering(() => value);
