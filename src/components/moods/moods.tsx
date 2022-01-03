@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ReactPlayer from "react-player/youtube";
 import { Music } from "../../types/music";
 import { ActionButton } from "../misc/action-button/action-button";
@@ -7,11 +7,8 @@ import "./moods.scss";
 
 import mute from "../../assets/mute.svg";
 import unMute from "../../assets/unMute.svg";
-import {
-  BufferingContextUpdate,
-  fireBaseHelper,
-  useBufferingUpdate,
-} from "../../App";
+import { fireBaseHelper } from "../../App";
+import { useBufferingUpdate } from "../../global-state/buffering-provider";
 
 interface _props {
   setBottomMessage: (message: string) => void;

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { BufferingContext } from "../../App";
+import { BufferingContext } from "../../global-state/buffering-provider";
 import { MiniLoader } from "../misc/loader/loader";
 import "./bottom-indicator.scss";
 
