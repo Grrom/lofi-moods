@@ -1,24 +1,18 @@
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player/youtube";
 import { Music } from "../../types/music";
-import { ActionButton } from "../misc/action-button/action-button";
 import Mood from "./mood";
 import "./moods.scss";
 
-import mute from "../../assets/mute.svg";
-import unMute from "../../assets/unMute.svg";
 import { fireBaseHelper } from "../../App";
+import { useBufferingUpdate } from "../../global-state/buffering-provider";
+import { useBottomMessageUpdate } from "../../global-state/bottom-message-provider";
+import { useMuted } from "../../global-state/muted-provider";
 
-interface _props {
-  setBottomMessage: (message: string) => void;
-  setIsBuffering: (isBuffering: boolean) => void;
-}
-
-export default function Moods({ setBottomMessage, setIsBuffering }: _props) {
+export default function Moods() {
   const [moods, setMoods] = useState([] as Array<string>);
   const [isPlaying, setIsPlaying] = useState(false);
   const [selected, setSelected] = useState("");
-  const [isMuted, setIsMuted] = useState(false);
   const [music, setMusic] = useState<Music>();
   const [bg, setBg] = useState(
     "https://i.ytimg.com/vi/_ITiwPMUzho/maxresdefault.jpg"
@@ -33,9 +27,14 @@ export default function Moods({ setBottomMessage, setIsBuffering }: _props) {
     fetchMoods();
   }, []);
 
+  const setIsBuffering = useBufferingUpdate();
+  const setBottomMessage = useBottomMessageUpdate();
+  const isMuted = useMuted();
+
   function playMusic(music: Music) {
     setMusic(() => music);
     setIsPlaying(() => true);
+    setBottomMessage(`Fetching: ${music.title}`);
   }
   function checkAndSetBg(musicId?: string) {
     let image = new Image();
@@ -51,13 +50,6 @@ export default function Moods({ setBottomMessage, setIsBuffering }: _props) {
 
   return (
     <div id="parent" style={{ backgroundImage: `url(${bg})` }}>
-      <ActionButton
-        onClick={() => setIsMuted((current) => !current)}
-        isLoading={false}
-        text={""}
-        icon={isMuted ? mute : unMute}
-        className="mute-button"
-      />
       <div id="moods">
         {moods.map((value) => (
           <Mood
