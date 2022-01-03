@@ -4,7 +4,8 @@ import Moods from "./components/moods/moods";
 import FireBaseHelper from "./helpers/FirebaseHelper";
 import { initializeApp } from "firebase/app";
 import BottomIndicator from "./components/bottom-indicator/bottom-indicator";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import React from "react";
 
 initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
@@ -18,15 +19,27 @@ initializeApp({
 
 export const fireBaseHelper = new FireBaseHelper();
 
+export const BufferingContext = React.createContext(false);
+export const BufferingContextUpdate = React.createContext((value: boolean) => {
+  console.log(value);
+});
+
+export function useBuffering() {
+  return useContext(BufferingContext);
+}
+
+export function useBufferingUpdate() {
+  return useContext(BufferingContextUpdate);
+}
+
 function App() {
   const [isBuffering, setIsBuffering] = useState(false);
   const [bottomMessage, setBottomMessage] = useState(
     "Hello, How are you today?"
   );
 
-  function _setIsBuffering(isBuffering: boolean) {
-    console.log(isBuffering);
-    setIsBuffering(() => isBuffering);
+  function toggleBuffering(value: boolean) {
+    setIsBuffering(() => value);
   }
 
   function _setBottomMessage(message: string) {
@@ -35,11 +48,15 @@ function App() {
 
   return (
     <div id="app">
-      <Moods
-        setBottomMessage={_setBottomMessage}
-        setIsBuffering={_setIsBuffering}
-      ></Moods>
-      <BottomIndicator message={bottomMessage} isBuffering={isBuffering} />
+      <button onClick={() => setIsBuffering((current) => !current)}>
+        buffer
+      </button>
+      <BufferingContext.Provider value={isBuffering}>
+        <BufferingContextUpdate.Provider value={toggleBuffering}>
+          <Moods setBottomMessage={_setBottomMessage}></Moods>
+          <BottomIndicator message={bottomMessage} />
+        </BufferingContextUpdate.Provider>
+      </BufferingContext.Provider>
     </div>
   );
 }
