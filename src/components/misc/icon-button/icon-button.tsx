@@ -1,15 +1,15 @@
 import { MiniLoader } from "../loader/loader";
 
-import "./action-button.scss";
+import "./icon-button.scss";
 
 interface _props {
-  onClick: () => any;
+  onClick: (event?: any) => any;
   isLoading: boolean;
-  text: string;
+  text?: string;
   icon: string;
   className?: string;
 }
-export function ActionButton({
+export function IconButton({
   onClick,
   isLoading,
   text,
@@ -18,16 +18,14 @@ export function ActionButton({
 }: _props) {
   return (
     <span
-      className={`action-button ${className}`}
+      className={`icon-button ${className}`}
       title={text}
-      onClick={() => {
-        onClick();
-      }}
+      onClick={(event) => onClick(event)}
     >
       {isLoading ? (
         <MiniLoader />
       ) : (
-        <img src={icon} alt={text} className="icon" />
+        <img src={icon} alt={text} className="button-icon" />
       )}
       <h4>{text} </h4>
     </span>

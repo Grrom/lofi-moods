@@ -1,6 +1,10 @@
 import { useRef, useState } from "react";
 import { authenticationHelper } from "../../App";
+import { IconButton } from "../misc/icon-button/icon-button";
+import InputField from "../misc/input-field/input-field";
 import "./login-signup.scss";
+
+import login from "../../assets/login.svg";
 
 export default function LoginSignup() {
   const [isLogin, setIsLogin] = useState(true);
@@ -11,17 +15,15 @@ export default function LoginSignup() {
   if (isLogin) {
     return (
       <div id="login-form">
-        <h2>Login</h2>
-        <div>
-          <span>email</span>
-          <input type="email" ref={emailRef} />
-        </div>
-        <div>
-          <span>password</span>
-          <input type="password" ref={passwordRef} />
-        </div>
-        <h4>Forgot password?</h4>
-        <button
+        <h1 className="title">Login</h1>
+        <InputField type="email" icon="string" label="Email" />
+        <InputField type="password" icon="string" label="Password" />
+        {/* <h4>Forgot password?</h4>  todo*/}
+        <IconButton
+          icon={login}
+          isLoading={false}
+          text={"Login"}
+          className="login-button"
           onClick={(event) => {
             event.preventDefault();
             authenticationHelper.login(
@@ -29,11 +31,8 @@ export default function LoginSignup() {
               passwordRef.current.value
             );
           }}
-        >
-          login
-        </button>
-        <button>Login with google</button>
-        <h2>or</h2>
+        />
+        <h3>or</h3>
         <h4 onClick={() => setIsLogin(() => false)} className="clickable">
           Sign up
         </h4>

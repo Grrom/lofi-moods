@@ -4,8 +4,9 @@
 .login-modal {
   margin: auto;
   background-color: white;
-  max-width: 500px;
   text-align: center;
+  max-width: 500px;
+  width: 90%;
 
   animation: bounce-pop 200ms;
 
@@ -33,9 +34,9 @@
   right: 0;
   bottom: 0;
   background-color: $translucentBlack;
-  padding: 140px 20px;
+  padding: 90px 20px;
 
   @include mobile {
-    padding: 80px 20px;
+    padding: 60px 20px;
   }
 }
