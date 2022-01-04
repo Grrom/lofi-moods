@@ -1,25 +1,29 @@
 {
   "files": {
-    "main.css": "/lofi-moods/static/css/main.ace5b2de.chunk.css",
-    "main.js": "/lofi-moods/static/js/main.424df7c6.chunk.js",
-    "main.js.map": "/lofi-moods/static/js/main.424df7c6.chunk.js.map",
-    "runtime-main.js": "/lofi-moods/static/js/runtime-main.70bb33be.js",
-    "runtime-main.js.map": "/lofi-moods/static/js/runtime-main.70bb33be.js.map",
-    "static/js/2.8201c158.chunk.js": "/lofi-moods/static/js/2.8201c158.chunk.js",
-    "static/js/2.8201c158.chunk.js.map": "/lofi-moods/static/js/2.8201c158.chunk.js.map",
-    "static/js/3.8bc5cefa.chunk.js": "/lofi-moods/static/js/3.8bc5cefa.chunk.js",
-    "static/js/3.8bc5cefa.chunk.js.map": "/lofi-moods/static/js/3.8bc5cefa.chunk.js.map",
+    "main.css": "/lofi-moods/static/css/main.5dd096ae.chunk.css",
+    "main.js": "/lofi-moods/static/js/main.12e1009a.chunk.js",
+    "main.js.map": "/lofi-moods/static/js/main.12e1009a.chunk.js.map",
+    "runtime-main.js": "/lofi-moods/static/js/runtime-main.c7f0a06e.js",
+    "runtime-main.js.map": "/lofi-moods/static/js/runtime-main.c7f0a06e.js.map",
+    "static/js/2.b2ffa59e.chunk.js": "/lofi-moods/static/js/2.b2ffa59e.chunk.js",
+    "static/js/2.b2ffa59e.chunk.js.map": "/lofi-moods/static/js/2.b2ffa59e.chunk.js.map",
+    "static/js/3.7002a18e.chunk.js": "/lofi-moods/static/js/3.7002a18e.chunk.js",
+    "static/js/3.7002a18e.chunk.js.map": "/lofi-moods/static/js/3.7002a18e.chunk.js.map",
     "index.html": "/lofi-moods/index.html",
-    "static/css/main.ace5b2de.chunk.css.map": "/lofi-moods/static/css/main.ace5b2de.chunk.css.map",
-    "static/js/2.8201c158.chunk.js.LICENSE.txt": "/lofi-moods/static/js/2.8201c158.chunk.js.LICENSE.txt",
+    "static/css/main.5dd096ae.chunk.css.map": "/lofi-moods/static/css/main.5dd096ae.chunk.css.map",
+    "static/js/2.b2ffa59e.chunk.js.LICENSE.txt": "/lofi-moods/static/js/2.b2ffa59e.chunk.js.LICENSE.txt",
+    "static/media/login.e2edf9d9.svg": "/lofi-moods/static/media/login.e2edf9d9.svg",
+    "static/media/logout.4442e419.svg": "/lofi-moods/static/media/logout.4442e419.svg",
     "static/media/mute.d7f38ca3.svg": "/lofi-moods/static/media/mute.d7f38ca3.svg",
     "static/media/profile.d4070b52.svg": "/lofi-moods/static/media/profile.d4070b52.svg",
-    "static/media/unMute.8a278345.svg": "/lofi-moods/static/media/unMute.8a278345.svg"
+    "static/media/sample_badge.984dd7be.png": "/lofi-moods/static/media/sample_badge.984dd7be.png",
+    "static/media/unMute.8a278345.svg": "/lofi-moods/static/media/unMute.8a278345.svg",
+    "static/media/verified.1b7256e8.svg": "/lofi-moods/static/media/verified.1b7256e8.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.70bb33be.js",
-    "static/js/2.8201c158.chunk.js",
-    "static/css/main.ace5b2de.chunk.css",
-    "static/js/main.424df7c6.chunk.js"
+    "static/js/runtime-main.c7f0a06e.js",
+    "static/js/2.b2ffa59e.chunk.js",
+    "static/css/main.5dd096ae.chunk.css",
+    "static/js/main.12e1009a.chunk.js"
   ]
 }
