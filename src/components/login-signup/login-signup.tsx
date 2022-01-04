@@ -24,7 +24,7 @@ export default function LoginSignup() {
         <button
           onClick={(event) => {
             event.preventDefault();
-            authenticationHelper.signup(
+            authenticationHelper.login(
               emailRef.current.value,
               passwordRef.current.value
             );
@@ -47,13 +47,23 @@ export default function LoginSignup() {
         <h2>Sign up</h2>
         <div>
           <span>email</span>
-          <input type="text" />
+          <input type="text" ref={emailRef} />
         </div>
         <div>
           <span>password</span>
-          <input type="password" />
+          <input type="password" ref={passwordRef} />
         </div>
-        <button>sign up</button>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            authenticationHelper.signup(
+              emailRef.current.value,
+              passwordRef.current.value
+            );
+          }}
+        >
+          sign up
+        </button>
         <button>Sign up with google</button>
         <h4 onClick={() => setIsLogin(() => true)} className="clickable">
           Already have an account? Login

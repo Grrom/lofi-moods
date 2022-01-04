@@ -1,4 +1,6 @@
+import { signOut } from "@firebase/auth";
 import Modal from "react-modal";
+import { authenticationHelper } from "../../App";
 import {
   useModalProfile,
   useModalProfileUpdate,
@@ -36,6 +38,14 @@ export default function Profile() {
         className="profile-modal"
         overlayClassName="overlay"
       >
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            signOut(authenticationHelper.auth);
+          }}
+        >
+          logout
+        </button>
         hello world
       </Modal>
     );

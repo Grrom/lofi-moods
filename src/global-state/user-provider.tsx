@@ -23,7 +23,11 @@ export default function UserProvider({ children }: providerProps) {
   function updateUser(user: User | null) {
     console.log("updating user");
     console.log(user?.email);
-    setUser(() => new LofiMoodsUser("fasdf", "fadf", "adfasdf"));
+    if (user !== null) {
+      setUser(() => new LofiMoodsUser("fasdf", "fadf", "adfasdf"));
+    } else {
+      setUser(() => ({} as LofiMoodsUser));
+    }
   }
 
   useEffect(() => {
