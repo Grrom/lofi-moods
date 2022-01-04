@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { createRef, useState } from "react";
 import { authenticationHelper } from "../../App";
 import { IconButton } from "../misc/icon-button/icon-button";
 import InputField from "../misc/input-field/input-field";
@@ -9,30 +9,38 @@ import login from "../../assets/login.svg";
 export default function LoginSignup() {
   const [isLogin, setIsLogin] = useState(true);
 
-  const emailRef = useRef(null as unknown as HTMLInputElement);
-  const passwordRef = useRef(null as unknown as HTMLInputElement);
+  const emailRef = createRef<HTMLInputElement>();
+  const passwordRef = createRef<HTMLInputElement>();
 
   if (isLogin) {
     return (
-      <div id="login-form">
+      <div className="form">
         <h1 className="title">Login</h1>
-        <InputField type="email" icon="string" label="Email" />
-        <InputField type="password" icon="string" label="Password" />
-        {/* <h4>Forgot password?</h4>  todo*/}
+        <InputField type="email" label="Email" ref={emailRef} />
+        <InputField type="password" label="Password" ref={passwordRef} />
+        <h4
+          className="clickable"
+          onClick={() => {
+            let remember = window.open();
+            remember?.document.write(
+              "<h1>This part is still under construction, in the meantime, Try to remember it ,C'mon you can do it!</h1>"
+            );
+          }}
+        >
+          Forgot password?
+        </h4>
         <IconButton
           icon={login}
           isLoading={false}
           text={"Login"}
-          className="login-button"
-          onClick={(event) => {
-            event.preventDefault();
+          className="button"
+          onClick={() => {
             authenticationHelper.login(
-              emailRef.current.value,
-              passwordRef.current.value
+              emailRef.current!.value,
+              passwordRef.current!.value
             );
           }}
         />
-        <h3>or</h3>
         <h4 onClick={() => setIsLogin(() => false)} className="clickable">
           Sign up
         </h4>
@@ -40,28 +48,22 @@ export default function LoginSignup() {
     );
   } else {
     return (
-      <div>
-        <h2>Sign up</h2>
-        <div>
-          <span>email</span>
-          <input type="text" ref={emailRef} />
-        </div>
-        <div>
-          <span>password</span>
-          <input type="password" ref={passwordRef} />
-        </div>
-        <button
-          onClick={(event) => {
-            event.preventDefault();
+      <div className="form">
+        <h1 className="title">Sign up</h1>
+        <InputField type="email" label="Email" ref={emailRef} />
+        <InputField type="password" label="Password" ref={passwordRef} />
+        <IconButton
+          icon={login}
+          isLoading={false}
+          text="Sign Up"
+          className="button"
+          onClick={() => {
             authenticationHelper.signup(
-              emailRef.current.value,
-              passwordRef.current.value
+              emailRef.current!.value,
+              passwordRef.current!.value
             );
           }}
-        >
-          sign up
-        </button>
-        <button>Sign up with google</button>
+        />
         <h4 onClick={() => setIsLogin(() => true)} className="clickable">
           Already have an account? Login
         </h4>

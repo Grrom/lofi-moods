@@ -1,14 +1,14 @@
 @import "../../styles/presets";
 
-#login-form {
+.form {
   max-width: 500px;
+
+  .button {
+    background-color: $secondary;
+    margin-top: 20px;
+  }
 
   .title {
     color: $primary;
-  }
-
-  .login-button {
-    background-color: $secondary;
-    margin-top: 20px;
   }
 }
