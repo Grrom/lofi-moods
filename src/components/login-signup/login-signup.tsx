@@ -5,7 +5,6 @@ import InputField from "../misc/input-field/input-field";
 import "./login-signup.scss";
 
 import login from "../../assets/login.svg";
-import { queryHelpers } from "@testing-library/react";
 
 export default function LoginSignup() {
   const [isLogin, setIsLogin] = useState(true);
