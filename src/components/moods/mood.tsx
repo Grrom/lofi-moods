@@ -1,5 +1,5 @@
 import { fireBaseHelper } from "../../App";
-import { Music } from "../../types/music";
+import Music from "../../types/music";
 
 interface _props {
   mood: string;

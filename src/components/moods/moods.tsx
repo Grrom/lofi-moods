@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player/youtube";
-import { Music } from "../../types/music";
+import Music from "../../types/music";
 import Mood from "./mood";
 import "./moods.scss";
 
