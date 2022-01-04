@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { authenticationHelper } from "../../App";
 import "./login-signup.scss";
 
 export default function LoginSignup() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
-  console.log(authenticationHelper.auth);
+  const emailRef = useRef(null as unknown as HTMLInputElement);
+  const passwordRef = useRef(null as unknown as HTMLInputElement);
 
   if (isLogin) {
     return (
@@ -13,14 +14,26 @@ export default function LoginSignup() {
         <h2>Login</h2>
         <div>
           <span>email</span>
-          <input type="text" />
+          <input type="email" ref={emailRef} />
         </div>
         <div>
           <span>password</span>
-          <input type="password" />
+          <input type="password" ref={passwordRef} />
         </div>
         <h4>Forgot password?</h4>
-        <button>login</button>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            authenticationHelper.signup(
+              emailRef.current.value,
+              passwordRef.current.value
+            );
+            console.log(emailRef.current.value);
+            console.log(passwordRef.current.value);
+          }}
+        >
+          login
+        </button>
         <button>Login with google</button>
         <h2>or</h2>
         <h4 onClick={() => setIsLogin(() => false)} className="clickable">

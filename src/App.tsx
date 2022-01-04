@@ -12,6 +12,7 @@ import MutedProvider from "./global-state/muted-provider";
 import ModalProvider from "./global-state/profile-modal-provider";
 import Profile from "./components/profile/profile";
 import AuthenticationHelper from "./helpers/authentication-helper";
+import UserProvider from "./global-state/user-provider";
 
 export const authenticationHelper = new AuthenticationHelper(
   initializeApp({
@@ -34,9 +35,11 @@ function App() {
         <BottomMessageProvider>
           <MutedProvider>
             <ModalProvider>
-              <Controls />
-              <Moods />
-              <Profile />
+              <UserProvider>
+                <Controls />
+                <Moods />
+                <Profile />
+              </UserProvider>
             </ModalProvider>
           </MutedProvider>
           <BottomIndicator />

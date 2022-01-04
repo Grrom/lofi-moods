@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import { User } from "firebase/auth";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
+import { authenticationHelper } from "../App";
 import { providerProps } from "../types/interfaces";
-import User from "../types/user";
+import LofiMoodsUser from "../types/user";
 
-export const UserContext = React.createContext({} as User);
-export const UserContextUpdate = React.createContext((value: User) => {});
+export const UserContext = React.createContext({} as LofiMoodsUser);
+export const UserContextUpdate = React.createContext(
+  (value: User | null) => {}
+);
 
 export function useUser() {
   return useContext(UserContext);
@@ -15,10 +19,23 @@ export function useUserUpdate() {
 }
 
 export default function UserProvider({ children }: providerProps) {
-  const [user, setUser] = useState({} as User);
-  function updateUser(value: User) {
-    setUser(() => value);
+  const [user, setUser] = useState({} as LofiMoodsUser);
+  function updateUser(user: User | null) {
+    console.log("updating user");
+    console.log(user?.email);
+    setUser(() => new LofiMoodsUser("fasdf", "fadf", "adfasdf"));
   }
+
+  useEffect(() => {
+    console.log("listening for updates");
+    const unsubscribe = authenticationHelper.auth.onAuthStateChanged(
+      (user: User | null) => {
+        updateUser(user);
+      }
+    );
+    return unsubscribe;
+  }, []);
+
   return (
     <UserContext.Provider value={user}>
       <UserContextUpdate.Provider value={updateUser}>

@@ -1,6 +1,6 @@
 import Badge from "./badge";
 
-export default class User {
+export default class LofiMoodsUser {
   name: string;
   imagesrc: string;
   id: string;
