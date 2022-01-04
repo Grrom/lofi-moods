@@ -15,16 +15,117 @@
 }
 
 .profile-modal {
-  position: absolute;
-  top: 40px;
-  left: 40px;
-  right: 40px;
-  bottom: 40px;
+  margin: auto;
   background-color: white;
-  max-width: 500px;
+  text-align: center;
+  max-width: 900px;
+  width: 90%;
+  background-color: $bg-light;
 
-  @extend .rounded-border;
+  animation: bounce-pop 200ms;
+
+  @extend .circular-border;
   @extend .default-padding;
+
+  .profile-card {
+    padding: 32px;
+
+    .logout {
+      background-color: $secondary;
+      margin: 24px auto;
+      max-width: 200px;
+
+      width: 90%;
+
+      @extend .circular-border;
+      @extend .box-shadow;
+    }
+
+    .user-card {
+      display: flex;
+      align-items: center;
+      background-color: white;
+
+      @extend .circular-border;
+      @extend .box-shadow;
+
+      @include mobile {
+        flex-direction: column;
+      }
+
+      .user-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+        border: 4px solid $secondary;
+
+        @extend .default-margin;
+        @extend .box-shadow;
+      }
+
+      .user-details {
+        width: 100%;
+        text-align: start;
+
+        @extend .default-margin;
+
+        @include mobile {
+          text-align: center;
+        }
+
+        .user-status {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          @include mobile {
+            flex-direction: column;
+          }
+
+          .user-name {
+            text-transform: capitalize;
+            color: $primary;
+            font-weight: bold;
+          }
+
+          .verified {
+            display: flex;
+            align-items: center;
+            text-transform: capitalize;
+            color: white;
+            background-color: $green;
+            font-weight: bold;
+            padding: 12px 32px;
+
+            @extend .box-shadow;
+            @extend .circular-border;
+
+            .verified-icon {
+              padding: 0 0 0 8px !important;
+              @extend .icon;
+            }
+          }
+        }
+
+        .user-badges {
+          display: inline-flex;
+
+          flex-wrap: wrap;
+          background-color: $primary;
+          padding: 8px;
+          margin: 8px 0;
+
+          @extend .box-shadow;
+          @extend .circular-border;
+
+          .badge {
+            width: 28px;
+            height: 28px;
+          }
+        }
+      }
+    }
+  }
 }
 
 .overlay {
