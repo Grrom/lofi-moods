@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { authenticationHelper } from "../../App";
 import "./login-signup.scss";
 
 export default function LoginSignup() {
   const [isLogin, setIsLogin] = useState(false);
+
+  console.log(authenticationHelper.auth);
 
   if (isLogin) {
     return (
