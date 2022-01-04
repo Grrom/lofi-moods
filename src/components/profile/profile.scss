@@ -7,7 +7,7 @@
   max-width: 500px;
   text-align: center;
 
-  animation: popUp 150ms both;
+  animation: bounce-pop 200ms;
 
   @extend .circular-border;
   @extend .default-padding;
