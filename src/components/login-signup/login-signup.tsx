@@ -6,7 +6,7 @@ export default function LoginSignup() {
 
   if (isLogin) {
     return (
-      <div>
+      <div id="login-form">
         <h2>Login</h2>
         <div>
           <span>email</span>
@@ -20,7 +20,9 @@ export default function LoginSignup() {
         <button>login</button>
         <button>Login with google</button>
         <h2>or</h2>
-        <h4 onClick={() => setIsLogin(() => false)}>Sign up</h4>
+        <h4 onClick={() => setIsLogin(() => false)} className="clickable">
+          Sign up
+        </h4>
       </div>
     );
   } else {
@@ -37,7 +39,7 @@ export default function LoginSignup() {
         </div>
         <button>sign up</button>
         <button>Sign up with google</button>
-        <h4 onClick={() => setIsLogin(() => true)}>
+        <h4 onClick={() => setIsLogin(() => true)} className="clickable">
           Already have an account? Login
         </h4>
       </div>

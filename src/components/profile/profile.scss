@@ -1,10 +1,13 @@
 @import "../../styles/presets";
+@import "../../styles/keyframes";
 
 .login-modal {
   margin: auto;
   background-color: white;
   max-width: 500px;
   text-align: center;
+
+  animation: popUp 150ms both;
 
   @extend .circular-border;
   @extend .default-padding;
