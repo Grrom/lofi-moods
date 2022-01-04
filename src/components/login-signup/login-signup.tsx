@@ -5,9 +5,11 @@ import InputField from "../misc/input-field/input-field";
 import "./login-signup.scss";
 
 import login from "../../assets/login.svg";
+import { queryHelpers } from "@testing-library/react";
 
 export default function LoginSignup() {
   const [isLogin, setIsLogin] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const emailRef = createRef<HTMLInputElement>();
   const passwordRef = createRef<HTMLInputElement>();
@@ -31,14 +33,20 @@ export default function LoginSignup() {
         </h4>
         <IconButton
           icon={login}
-          isLoading={false}
+          isLoading={isSubmitting}
           text={"Login"}
           className="button"
-          onClick={() => {
-            authenticationHelper.login(
-              emailRef.current!.value,
-              passwordRef.current!.value
-            );
+          onClick={async () => {
+            setIsSubmitting(true);
+            try {
+              await authenticationHelper.login(
+                emailRef.current!.value,
+                passwordRef.current!.value
+              );
+            } catch (e) {
+              window.alert(e);
+            }
+            setIsSubmitting(false);
           }}
         />
         <h4 onClick={() => setIsLogin(() => false)} className="clickable">
@@ -54,14 +62,20 @@ export default function LoginSignup() {
         <InputField type="password" label="Password" ref={passwordRef} />
         <IconButton
           icon={login}
-          isLoading={false}
+          isLoading={isSubmitting}
           text="Sign Up"
           className="button"
-          onClick={() => {
-            authenticationHelper.signup(
-              emailRef.current!.value,
-              passwordRef.current!.value
-            );
+          onClick={async () => {
+            setIsSubmitting(true);
+            try {
+              await authenticationHelper.signup(
+                emailRef.current!.value,
+                passwordRef.current!.value
+              );
+            } catch (e) {
+              window.alert(e);
+            }
+            setIsSubmitting(false);
           }}
         />
         <h4 onClick={() => setIsLogin(() => true)} className="clickable">
