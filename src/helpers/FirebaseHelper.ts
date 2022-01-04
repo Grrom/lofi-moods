@@ -1,6 +1,6 @@
 import { collection, getDocs } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
-import { Music } from "../types/music";
+import Music from "../types/music";
 
 export default class FireBaseHelper {
   firestore = getFirestore();

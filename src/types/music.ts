@@ -1,4 +1,4 @@
-export class Music {
+export default class Music {
   artist: string;
   link: string;
   title: string;
