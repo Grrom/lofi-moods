@@ -14,7 +14,7 @@ export function useModalProfileUpdate() {
 }
 
 export default function ModalProfileProvider({ children }: providerProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   function toggleModalProfile() {
     setIsOpen((current) => !current);
   }

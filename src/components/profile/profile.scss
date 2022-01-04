@@ -1,0 +1,38 @@
+@import "../../styles/presets";
+
+.login-modal {
+  margin: auto;
+  background-color: white;
+  max-width: 500px;
+  text-align: center;
+
+  @extend .circular-border;
+  @extend .default-padding;
+}
+
+.profile-modal {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  background-color: white;
+  max-width: 500px;
+
+  @extend .rounded-border;
+  @extend .default-padding;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $translucentBlack;
+  padding: 140px 20px;
+
+  @include mobile {
+    padding: 80px 20px;
+  }
+}

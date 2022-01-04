@@ -9,7 +9,7 @@ import BottomMessageProvider from "./global-state/bottom-message-provider";
 import Controls from "./components/controls/controls";
 import MutedProvider from "./global-state/muted-provider";
 import ModalProvider from "./global-state/profile-modal-provider";
-import LoginSignup from "./components/profile/login-signup";
+import Profile from "./components/profile/profile";
 
 initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
@@ -32,7 +32,7 @@ function App() {
             <ModalProvider>
               <Controls />
               <Moods />
-              <LoginSignup />
+              <Profile />
             </ModalProvider>
           </MutedProvider>
           <BottomIndicator />
