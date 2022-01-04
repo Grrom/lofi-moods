@@ -21,17 +21,16 @@ export function useUserUpdate() {
 export default function UserProvider({ children }: providerProps) {
   const [user, setUser] = useState({} as LofiMoodsUser);
   function updateUser(user: User | null) {
-    console.log("updating user");
-    console.log(user?.email);
     if (user !== null) {
-      setUser(() => new LofiMoodsUser("fasdf", "fadf", "adfasdf"));
+      setUser(
+        () => new LofiMoodsUser(user.displayName!, user.photoURL!, user.uid)
+      );
     } else {
       setUser(() => ({} as LofiMoodsUser));
     }
   }
 
   useEffect(() => {
-    console.log("listening for updates");
     const unsubscribe = authenticationHelper.auth.onAuthStateChanged(
       (user: User | null) => {
         updateUser(user);

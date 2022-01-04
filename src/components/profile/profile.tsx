@@ -46,6 +46,7 @@ export default function Profile() {
         >
           logout
         </button>
+        {JSON.stringify(user)}
         hello world
       </Modal>
     );
