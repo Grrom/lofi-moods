@@ -8,6 +8,13 @@
   @extend .hover-grow;
 }
 
+.disabled-button {
+  background-color: $bg-dark !important;
+
+  @extend .hover-disabled;
+  @extend .no-select;
+}
+
 // individual
 
 .shadow-inset {
@@ -46,6 +53,9 @@
   cursor: pointer;
 }
 
+.hover-disabled {
+  cursor: not-allowed !important;
+}
 .active-shrink:active {
   transform: scale(0.9);
   box-shadow: 0 0 0 0 #fff;

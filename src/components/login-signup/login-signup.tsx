@@ -5,6 +5,7 @@ import InputField from "../misc/input-field/input-field";
 import "./login-signup.scss";
 
 import login from "../../assets/login.svg";
+import Helpers from "../../helpers/helpers";
 
 export default function LoginSignup() {
   const [isLogin, setIsLogin] = useState(true);
@@ -13,74 +14,75 @@ export default function LoginSignup() {
   const emailRef = createRef<HTMLInputElement>();
   const passwordRef = createRef<HTMLInputElement>();
 
-  if (isLogin) {
-    return (
-      <div className="form">
-        <h1 className="title">Login</h1>
-        <InputField type="email" label="Email" ref={emailRef} />
-        <InputField type="password" label="Password" ref={passwordRef} />
-        <h4
-          className="clickable"
-          onClick={() => {
-            let remember = window.open();
-            remember?.document.write(
-              "<h1>This part is still under construction, in the meantime, Try to remember it ,C'mon you can do it!</h1>"
+  async function submit() {
+    if (emailRef.current!.value === "" || passwordRef.current!.value === "") {
+      return Helpers.infoToast("Fill in all the fields");
+    }
+    if (!isSubmitting) {
+      setIsSubmitting(true);
+      try {
+        isLogin
+          ? await authenticationHelper.login(
+              emailRef.current!.value,
+              passwordRef.current!.value
+            )
+          : await authenticationHelper.signup(
+              emailRef.current!.value,
+              passwordRef.current!.value
             );
+        Helpers.successToast("Logged in successfully");
+      } catch (e) {
+        let errorMessage = (e as any).code;
+        Helpers.errorToast(
+          errorMessage.substring(
+            errorMessage.indexOf("/") + 1,
+            errorMessage.length
+          )
+        );
+        setIsSubmitting(false);
+      }
+    }
+  }
+
+  let title = isLogin ? "Login" : "Sign Up";
+
+  let clickableClass = isSubmitting ? "hover-disabled" : "clickable";
+
+  return (
+    <div className="form">
+      <h1 className="title">{title}</h1>
+      <InputField type="email" label="Email" ref={emailRef} />
+      <InputField type="password" label="Password" ref={passwordRef} />
+      {isLogin ? (
+        <h4
+          className={clickableClass}
+          onClick={() => {
+            if (!isSubmitting) {
+              let remember = window.open();
+              remember?.document.write(
+                "<h1>This part is still under construction, in the meantime, Try to remember it ,C'mon you can do it!</h1>"
+              );
+            }
           }}
         >
           Forgot password?
         </h4>
-        <IconButton
-          icon={login}
-          isLoading={isSubmitting}
-          text={"Login"}
-          className="button"
-          onClick={async () => {
-            setIsSubmitting(true);
-            try {
-              await authenticationHelper.login(
-                emailRef.current!.value,
-                passwordRef.current!.value
-              );
-            } catch (e) {
-              window.alert(e);
-            }
-            setIsSubmitting(false);
-          }}
-        />
-        <h4 onClick={() => setIsLogin(() => false)} className="clickable">
-          Sign up
-        </h4>
-      </div>
-    );
-  } else {
-    return (
-      <div className="form">
-        <h1 className="title">Sign up</h1>
-        <InputField type="email" label="Email" ref={emailRef} />
-        <InputField type="password" label="Password" ref={passwordRef} />
-        <IconButton
-          icon={login}
-          isLoading={isSubmitting}
-          text="Sign Up"
-          className="button"
-          onClick={async () => {
-            setIsSubmitting(true);
-            try {
-              await authenticationHelper.signup(
-                emailRef.current!.value,
-                passwordRef.current!.value
-              );
-            } catch (e) {
-              window.alert(e);
-            }
-            setIsSubmitting(false);
-          }}
-        />
-        <h4 onClick={() => setIsLogin(() => true)} className="clickable">
-          Already have an account? Login
-        </h4>
-      </div>
-    );
-  }
+      ) : (
+        ""
+      )}
+      <IconButton
+        icon={login}
+        isLoading={isSubmitting}
+        text={title}
+        className={`button ${isSubmitting ? "disabled-button" : ""}`}
+        onClick={async () => (!isSubmitting ? submit() : "")}
+      />
+      <h4
+        onClick={() => (!isSubmitting ? setIsLogin((current) => !current) : "")}
+        className={clickableClass}
+      >
+        {isLogin ? "Sign up" : "Already have an account? Login"}
+      </h4>
+    </div>
+  );
 }
