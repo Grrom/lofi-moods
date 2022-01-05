@@ -95,13 +95,7 @@ export default function Profile() {
               signOut(authenticationHelper.auth);
               Helpers.successToast("Logged out successfully");
             } catch (e) {
-              let errorMessage = (e as any).code;
-              Helpers.errorToast(
-                errorMessage.substring(
-                  errorMessage.indexOf("/") + 1,
-                  errorMessage.length
-                )
-              );
+              Helpers.errorToast(Helpers.getFirebaseError(e));
             }
           }}
         />

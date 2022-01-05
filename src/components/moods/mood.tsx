@@ -10,7 +10,7 @@ interface _props {
 export default function Mood({ mood, playMusic, isSelected, onClick }: _props) {
   return (
     <div
-      className={`mood ${isSelected ? "active" : ""}`}
+      className={`mood ${isSelected && "active"}`}
       onClick={async () => {
         onClick();
         let musicList: Array<Music> = await fireBaseHelper.fetchMusic(mood);

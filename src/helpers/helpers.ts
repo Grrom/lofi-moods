@@ -71,6 +71,22 @@ export default class Helpers {
     });
   };
 
+  static successAlert = (message: string) => {
+    Swal.fire({
+      icon: "success",
+      title: message,
+    });
+  };
+
+  static showLoading = (message: string) => {
+    Swal.fire({
+      title: message,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+  };
+
   static confirmDialog = ({
     question,
     onConfirm,
@@ -93,5 +109,13 @@ export default class Helpers {
   };
   static inputGetter = (id: string) => {
     return (document.getElementById(id) as HTMLInputElement)!.value;
+  };
+
+  static getFirebaseError = (error: any) => {
+    let errorMessage = (error as any).code;
+    return errorMessage.substring(
+      errorMessage.indexOf("/") + 1,
+      errorMessage.length
+    );
   };
 }
