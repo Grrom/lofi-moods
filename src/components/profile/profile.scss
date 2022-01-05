@@ -87,6 +87,11 @@
             text-transform: capitalize;
             color: $primary;
             font-weight: bold;
+            word-break: break-all;
+
+            @include mobile {
+              padding: 8px;
+            }
           }
 
           .unverified {

@@ -26,6 +26,7 @@ export default function UserProvider({ children }: providerProps) {
         () =>
           new LofiMoodsUser(
             user.displayName!,
+            user.email!,
             user.photoURL!,
             user.uid,
             user.emailVerified

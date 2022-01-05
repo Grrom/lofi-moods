@@ -45,7 +45,7 @@ export default function Profile() {
           />
           <div className="user-details">
             <div className="user-status">
-              <h1 className="user-name">{user.name ?? "anonymous"}</h1>
+              <h1 className="user-name">{user.name}</h1>
               <div
                 className={`verified ${!user.isVerified && "unverified"}`}
                 onClick={() => {
