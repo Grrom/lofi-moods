@@ -23,7 +23,13 @@ export default function UserProvider({ children }: providerProps) {
   function updateUser(user: User | null) {
     if (user !== null) {
       setUser(
-        () => new LofiMoodsUser(user.displayName!, user.photoURL!, user.uid)
+        () =>
+          new LofiMoodsUser(
+            user.displayName!,
+            user.photoURL!,
+            user.uid,
+            user.emailVerified
+          )
       );
     } else {
       setUser(() => ({} as LofiMoodsUser));

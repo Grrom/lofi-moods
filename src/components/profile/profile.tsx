@@ -11,11 +11,11 @@ import LoginSignup from "../login-signup/login-signup";
 
 import verified from "../../assets/verified.svg";
 import logout from "../../assets/logout.svg";
-import sampleBadge from "../../assets/sample_badge.png";
 
 import "./profile.scss";
 import { IconButton } from "../misc/icon-button/icon-button";
 import Badge from "../../types/badge";
+import profile from "../../assets/profile.svg";
 
 export default function Profile() {
   const isOpen = useModalProfile();
@@ -25,8 +25,6 @@ export default function Profile() {
   if (user.name === undefined) {
     return <LoginModal />;
   }
-
-  const myBadge = new Badge(sampleBadge, "Gold badge", "sample_badge");
 
   return (
     <Modal
@@ -38,24 +36,38 @@ export default function Profile() {
       <div className="profile-card">
         <div className="user-card">
           <img
-            src={
-              user.imagesrc ??
-              "https://camo.githubusercontent.com/4da3943d17cbd884c4da4c39a9d5e11ad2fa9dac39f7cbf5867c24ff05411f61/68747470733a2f2f6d656469612e67697068792e636f6d2f6d656469612f567577396d35775876694649512f67697068792e676966"
-            }
+            src={user.imagesrc ?? profile}
             alt="user_image"
             className="user-image"
           />
           <div className="user-details">
             <div className="user-status">
-              <h1 className="user-name">{user.name}jerome</h1>
-              <div className="verified">
-                <span> verified</span>
-                <img src={verified} alt="" className="verified-icon" />
+              <h1 className="user-name">{user.name ?? "anonymous"}</h1>
+              <div
+                className={`verified ${!user.isVerified && "unverified"}`}
+                onClick={() => {
+                  if (!user.isVerified) {
+                    Helpers.confirmDialog({
+                      question: "Send verification link to your email?",
+                      onConfirm: () => console.log("yes"),
+                      confirmButtonColor: "green",
+                    });
+                  } else {
+                    Helpers.infoToast("You are already verified");
+                  }
+                }}
+              >
+                <span>{user.isVerified ? "verified" : "unverified"}</span>
+                <img
+                  src={verified}
+                  alt="verified-icon"
+                  className="verified-icon"
+                />
               </div>
             </div>
             <div className="user-badges">
-              {[myBadge, myBadge, myBadge].map(
-                (badge: Badge, index: number) => {
+              {user.badges !== undefined ? (
+                user.badges!.map((badge: Badge, index: number) => {
                   return (
                     <img
                       className="badge"
@@ -65,7 +77,9 @@ export default function Profile() {
                       key={badge.id + index}
                     />
                   );
-                }
+                })
+              ) : (
+                <span>no badges yet</span>
               )}
             </div>
           </div>

@@ -1,4 +1,5 @@
 @import "../../styles/presets";
+@import "../../styles/hovers";
 @import "../../styles/keyframes";
 
 .login-modal {
@@ -88,6 +89,12 @@
             font-weight: bold;
           }
 
+          .unverified {
+            background-color: $bg-dark !important;
+
+            @extend .clickable;
+          }
+
           .verified {
             display: flex;
             align-items: center;
@@ -109,10 +116,11 @@
 
         .user-badges {
           display: inline-flex;
+          color: white;
 
           flex-wrap: wrap;
           background-color: $primary;
-          padding: 8px;
+          padding: 8px 16px;
           margin: 8px 0;
 
           @extend .box-shadow;
