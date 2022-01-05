@@ -5,7 +5,7 @@ import {
   useModalProfile,
   useModalProfileUpdate,
 } from "../../global-state/profile-modal-provider";
-import { useUser } from "../../global-state/user-provider";
+import { useUser, useUserUpdate } from "../../global-state/user-provider";
 import Helpers from "../../helpers/helpers";
 import LoginSignup from "../login-signup/login-signup";
 
@@ -16,6 +16,7 @@ import "./profile.scss";
 import { IconButton } from "../misc/icon-button/icon-button";
 import Badge from "../../types/badge";
 import profile from "../../assets/profile.svg";
+import edit from "../../assets/edit.svg";
 import { useState } from "react";
 
 export default function Profile() {
@@ -24,6 +25,7 @@ export default function Profile() {
   const isOpen = useModalProfile();
 
   const user = useUser();
+  const userUpdate = useUserUpdate();
 
   if (user.name === undefined) {
     return <LoginModal />;
@@ -45,7 +47,34 @@ export default function Profile() {
           />
           <div className="user-details">
             <div className="user-status">
-              <h1 className="user-name">{user.name}</h1>
+              <h3 className="user-name">
+                <span>{user.name}</span>
+                <img
+                  src={edit}
+                  alt="edit"
+                  className="icon"
+                  onClick={() => {
+                    Helpers.textInputAlert(
+                      "Enter New Display name",
+                      async (newName) => {
+                        Helpers.showLoading("Updating Display name");
+                        try {
+                          await authenticationHelper.updateName(newName);
+                          Helpers.successToast("Display name updated!");
+                          const unsubscribe =
+                            authenticationHelper.auth.onAuthStateChanged(
+                              (user) => userUpdate(user)
+                            );
+                          authenticationHelper.triggerUpdate();
+                          unsubscribe();
+                        } catch (e) {
+                          Helpers.errorToast(Helpers.getFirebaseError(e));
+                        }
+                      }
+                    );
+                  }}
+                />
+              </h3>
               <div
                 className={`verified ${!user.isVerified && "unverified"}`}
                 onClick={() => {

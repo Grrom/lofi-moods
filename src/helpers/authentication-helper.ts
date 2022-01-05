@@ -5,6 +5,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  updateProfile,
+  updateCurrentUser,
 } from "firebase/auth";
 
 export default class AuthenticationHelper {
@@ -21,6 +23,14 @@ export default class AuthenticationHelper {
   public resetPassword = (email: string) => {
     return sendPasswordResetEmail(this.auth, email);
   };
+
+  public updateName = (name: string) => {
+    return updateProfile(this.auth.currentUser!, { displayName: name });
+  };
+
+  public triggerUpdate() {
+    return updateCurrentUser(this.auth, this.auth.currentUser);
+  }
 
   constructor(firebaseInstance: FirebaseApp) {
     this.auth = getAuth(firebaseInstance);

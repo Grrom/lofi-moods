@@ -84,13 +84,24 @@
           }
 
           .user-name {
+            display: flex;
+            align-items: center;
             text-transform: capitalize;
-            color: $primary;
+            background-color: $primary;
+            color: white;
             font-weight: bold;
             word-break: break-all;
+            padding: 8px 12px;
+
+            @extend .circular-border;
 
             @include mobile {
               padding: 8px;
+            }
+
+            .icon {
+              @extend .clickable;
+              @extend .icon;
             }
           }
 
