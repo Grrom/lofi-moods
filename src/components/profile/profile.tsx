@@ -1,4 +1,4 @@
-import { signOut } from "@firebase/auth";
+import { sendEmailVerification, signOut } from "@firebase/auth";
 import Modal from "react-modal";
 import { authenticationHelper } from "../../App";
 import {
@@ -16,8 +16,11 @@ import "./profile.scss";
 import { IconButton } from "../misc/icon-button/icon-button";
 import Badge from "../../types/badge";
 import profile from "../../assets/profile.svg";
+import { useState } from "react";
 
 export default function Profile() {
+  const [hasSentVerification, setHasSentVerification] = useState(false);
+
   const isOpen = useModalProfile();
 
   const user = useUser();
@@ -49,11 +52,27 @@ export default function Profile() {
                   if (!user.isVerified) {
                     Helpers.confirmDialog({
                       question: "Send verification link to your email?",
-                      onConfirm: () => console.log("yes"),
+                      onConfirm: async () => {
+                        if (hasSentVerification) {
+                          return window.location.reload();
+                        }
+                        Helpers.showLoading("Sending Verification email");
+                        try {
+                          await sendEmailVerification(
+                            authenticationHelper.auth.currentUser!,
+                            { url: "https://jeromelalunio.tech/lofi-moods" }
+                          );
+                          setHasSentVerification(true);
+
+                          Helpers.successToast(
+                            "Email Sent! Please check your inbox"
+                          );
+                        } catch (e) {
+                          Helpers.errorToast(Helpers.getFirebaseError(e));
+                        }
+                      },
                       confirmButtonColor: "green",
                     });
-                  } else {
-                    Helpers.infoToast("You are already verified");
                   }
                 }}
               >

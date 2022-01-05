@@ -59,7 +59,7 @@ export default function LoginSignup() {
                     Helpers.showLoading("Processing");
                     await authenticationHelper.resetPassword(email);
                     Helpers.successAlert(
-                      "We've send the reset password link to your email"
+                      "We've sent the reset password link to your email"
                     );
                   } catch (e) {
                     Helpers.errorToast(Helpers.getFirebaseError(e));
