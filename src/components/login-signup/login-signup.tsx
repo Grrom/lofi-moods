@@ -6,6 +6,7 @@ import "./login-signup.scss";
 
 import login from "../../assets/login.svg";
 import Helpers from "../../helpers/helpers";
+import AlertHelper from "../../helpers/alert-helper";
 
 export default function LoginSignup() {
   const [isLogin, setIsLogin] = useState(true);
@@ -16,7 +17,7 @@ export default function LoginSignup() {
 
   async function submit() {
     if (emailRef.current!.value === "" || passwordRef.current!.value === "") {
-      return Helpers.infoToast("Fill in all the fields");
+      return AlertHelper.infoToast("Fill in all the fields");
     }
     if (!isSubmitting) {
       setIsSubmitting(true);
@@ -30,9 +31,9 @@ export default function LoginSignup() {
               emailRef.current!.value,
               passwordRef.current!.value
             );
-        Helpers.successToast("Logged in successfully");
+        AlertHelper.successToast("Logged in successfully");
       } catch (e) {
-        Helpers.errorToast(Helpers.getFirebaseError(e));
+        AlertHelper.errorToast(Helpers.getFirebaseError(e));
         setIsSubmitting(false);
       }
     }
@@ -52,17 +53,17 @@ export default function LoginSignup() {
           className={clickableClass}
           onClick={() => {
             if (!isSubmitting) {
-              Helpers.textInputAlert(
+              AlertHelper.textInputAlert(
                 "Please Enter your email",
                 async (email) => {
                   try {
-                    Helpers.showLoading("Processing");
+                    AlertHelper.showLoading("Processing");
                     await authenticationHelper.resetPassword(email);
-                    Helpers.successAlert(
+                    AlertHelper.successAlert(
                       "We've sent the reset password link to your email"
                     );
                   } catch (e) {
-                    Helpers.errorToast(Helpers.getFirebaseError(e));
+                    AlertHelper.errorToast(Helpers.getFirebaseError(e));
                   }
                 }
               );

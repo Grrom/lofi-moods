@@ -19,6 +19,7 @@ import logout from "../../assets/logout.svg";
 import editImage from "../../assets/edit_image.svg";
 import defaultProfile from "../../assets/default_profile.png";
 import edit from "../../assets/edit.svg";
+import AlertHelper from "../../helpers/alert-helper";
 
 export default function Profile() {
   const [hasSentVerification, setHasSentVerification] = useState(false);
@@ -63,17 +64,17 @@ export default function Profile() {
               isLoading={false}
               className="edit"
               onClick={() =>
-                Helpers.fileInputAlert(
+                AlertHelper.fileInputAlert(
                   "Upload an image",
                   "image/*",
                   async (image) => {
                     //TO-DO: shrink image first before uploading
-                    Helpers.showLoading("Uploading Image");
+                    AlertHelper.showLoading("Uploading Image");
                     if (await fireBaseHelper.uploadImage(user.id, image)) {
-                      Helpers.successToast("Image Successfully uploaded!");
+                      AlertHelper.successToast("Image Successfully uploaded!");
                       setUserImage("refetch");
                     } else {
-                      Helpers.errorToast("Failed to upload image");
+                      AlertHelper.errorToast("Failed to upload image");
                     }
                   }
                 )
@@ -89,14 +90,14 @@ export default function Profile() {
                   alt="edit"
                   className="icon"
                   onClick={() => {
-                    Helpers.textInputAlert(
+                    AlertHelper.textInputAlert(
                       "Enter New Display name",
                       async (newName) => {
                         if (newName.length > 0) {
-                          Helpers.showLoading("Updating Display name");
+                          AlertHelper.showLoading("Updating Display name");
                           try {
                             await authenticationHelper.updateName(newName);
-                            Helpers.successToast("Display name updated!");
+                            AlertHelper.successToast("Display name updated!");
                             const unsubscribe =
                               authenticationHelper.auth.onAuthStateChanged(
                                 (user) => userUpdate(user)
@@ -104,7 +105,7 @@ export default function Profile() {
                             authenticationHelper.triggerUpdate();
                             unsubscribe();
                           } catch (e) {
-                            Helpers.errorToast(Helpers.getFirebaseError(e));
+                            AlertHelper.errorToast(Helpers.getFirebaseError(e));
                           }
                         }
                       }
@@ -116,13 +117,13 @@ export default function Profile() {
                 className={`verified ${!user.isVerified && "unverified"}`}
                 onClick={() => {
                   if (!user.isVerified) {
-                    Helpers.confirmDialog({
+                    AlertHelper.confirmDialog({
                       question: "Send verification link to your email?",
                       onConfirm: async () => {
                         if (hasSentVerification) {
                           return window.location.reload();
                         }
-                        Helpers.showLoading("Sending Verification email");
+                        AlertHelper.showLoading("Sending Verification email");
                         try {
                           await sendEmailVerification(
                             authenticationHelper.auth.currentUser!,
@@ -130,11 +131,11 @@ export default function Profile() {
                           );
                           setHasSentVerification(true);
 
-                          Helpers.successToast(
+                          AlertHelper.successToast(
                             "Email Sent! Please check your inbox"
                           );
                         } catch (e) {
-                          Helpers.errorToast(Helpers.getFirebaseError(e));
+                          AlertHelper.errorToast(Helpers.getFirebaseError(e));
                         }
                       },
                       confirmButtonColor: "green",
@@ -178,9 +179,9 @@ export default function Profile() {
             e.preventDefault();
             try {
               signOut(authenticationHelper.auth);
-              Helpers.successToast("Logged out successfully");
+              AlertHelper.successToast("Logged out successfully");
             } catch (e) {
-              Helpers.errorToast(Helpers.getFirebaseError(e));
+              AlertHelper.errorToast(Helpers.getFirebaseError(e));
             }
           }}
         />
