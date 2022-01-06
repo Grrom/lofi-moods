@@ -1,9 +1,10 @@
-import { collection, getDocs } from "firebase/firestore";
-import { getFirestore } from "firebase/firestore";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import Music from "../types/music";
 
 export default class FireBaseHelper {
   firestore = getFirestore();
+  storage = getStorage();
 
   public fetchMusic = async (mood: string): Promise<Array<Music>> => {
     const querySnapshot = await getDocs(collection(this.firestore, mood));
@@ -23,5 +24,16 @@ export default class FireBaseHelper {
       datas.push(data.name);
     });
     return datas;
+  };
+
+  public getUserImage = async (userId: string): Promise<string | null> => {
+    console.log("getting image");
+    try {
+      return await getDownloadURL(
+        ref(this.storage, `user_images/${userId}.png`)
+      );
+    } catch {
+      return null;
+    }
   };
 }

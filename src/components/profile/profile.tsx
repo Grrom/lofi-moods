@@ -1,6 +1,6 @@
 import { sendEmailVerification, signOut } from "@firebase/auth";
 import Modal from "react-modal";
-import { authenticationHelper } from "../../App";
+import { authenticationHelper, fireBaseHelper } from "../../App";
 import {
   useModalProfile,
   useModalProfileUpdate,
@@ -12,7 +12,7 @@ import LoginSignup from "../login-signup/login-signup";
 import "./profile.scss";
 import { IconButton } from "../misc/icon-button/icon-button";
 import Badge from "../../types/badge";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import verified from "../../assets/verified.svg";
 import logout from "../../assets/logout.svg";
@@ -23,10 +23,21 @@ import edit from "../../assets/edit.svg";
 export default function Profile() {
   const [hasSentVerification, setHasSentVerification] = useState(false);
 
+  const [userImage, setUserImage] = useState<string | null>(null);
+
   const isOpen = useModalProfile();
 
   const user = useUser();
   const userUpdate = useUserUpdate();
+
+  useEffect(() => {
+    async function getImage() {
+      let image = await fireBaseHelper.getUserImage(user.id);
+      console.log(image);
+      setUserImage(image);
+    }
+    if (userImage === null && user.id !== undefined) getImage();
+  }, [user.id, userImage]);
 
   if (user.name === undefined) {
     return <LoginModal />;
@@ -43,7 +54,7 @@ export default function Profile() {
         <div className="user-card">
           <div className="user-image">
             <img
-              src={user.imagesrc ?? defaultProfile}
+              src={userImage ?? defaultProfile}
               alt="user_image"
               className="image"
             />
