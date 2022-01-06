@@ -32,13 +32,7 @@ export default function LoginSignup() {
             );
         Helpers.successToast("Logged in successfully");
       } catch (e) {
-        let errorMessage = (e as any).code;
-        Helpers.errorToast(
-          errorMessage.substring(
-            errorMessage.indexOf("/") + 1,
-            errorMessage.length
-          )
-        );
+        Helpers.errorToast(Helpers.getFirebaseError(e));
         setIsSubmitting(false);
       }
     }
@@ -53,22 +47,30 @@ export default function LoginSignup() {
       <h1 className="title">{title}</h1>
       <InputField type="email" label="Email" ref={emailRef} />
       <InputField type="password" label="Password" ref={passwordRef} />
-      {isLogin ? (
+      {isLogin && (
         <h4
           className={clickableClass}
           onClick={() => {
             if (!isSubmitting) {
-              let remember = window.open();
-              remember?.document.write(
-                "<h1>This part is still under construction, in the meantime, Try to remember it ,C'mon you can do it!</h1>"
+              Helpers.textInputAlert(
+                "Please Enter your email",
+                async (email) => {
+                  try {
+                    Helpers.showLoading("Processing");
+                    await authenticationHelper.resetPassword(email);
+                    Helpers.successAlert(
+                      "We've sent the reset password link to your email"
+                    );
+                  } catch (e) {
+                    Helpers.errorToast(Helpers.getFirebaseError(e));
+                  }
+                }
               );
             }
           }}
         >
           Forgot password?
         </h4>
-      ) : (
-        ""
       )}
       <IconButton
         icon={login}

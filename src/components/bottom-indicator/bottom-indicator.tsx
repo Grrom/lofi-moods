@@ -10,7 +10,7 @@ export default function BottomIndicator() {
   return (
     <span id="bottom-indicator">
       {message}
-      {isBuffering ? <MiniLoader /> : ""}
+      {isBuffering && <MiniLoader />}
     </span>
   );
 }

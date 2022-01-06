@@ -42,6 +42,7 @@ export const InputField = forwardRef<HTMLInputElement, _props>(
             type={type}
             title={label}
             name={label}
+            autoComplete="on"
           />
         )}
       </div>

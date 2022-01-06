@@ -63,11 +63,46 @@ export default class Helpers {
     });
   };
 
+  static fileInputAlert = (
+    question: string,
+    accept: string,
+    onConfirm: (value: any) => void
+  ) => {
+    Swal.fire({
+      title: question,
+      input: "file",
+      inputAttributes: {
+        accept: accept,
+      },
+      showCancelButton: true,
+    }).then((value) => {
+      if (value.isConfirmed) {
+        onConfirm(value.value);
+      }
+    });
+  };
+
   static successToast = (message: string, duration?: number) => {
     fireToast({
       icon: "success",
       message: message,
       duration: duration,
+    });
+  };
+
+  static successAlert = (message: string) => {
+    Swal.fire({
+      icon: "success",
+      title: message,
+    });
+  };
+
+  static showLoading = (message: string) => {
+    Swal.fire({
+      title: message,
+      didOpen: () => {
+        Swal.showLoading();
+      },
     });
   };
 
@@ -93,5 +128,13 @@ export default class Helpers {
   };
   static inputGetter = (id: string) => {
     return (document.getElementById(id) as HTMLInputElement)!.value;
+  };
+
+  static getFirebaseError = (error: any) => {
+    let errorMessage = (error as any).code;
+    return errorMessage.substring(
+      errorMessage.indexOf("/") + 1,
+      errorMessage.length
+    );
   };
 }
