@@ -8,9 +8,11 @@ import { fireBaseHelper } from "../../App";
 import { useBufferingUpdate } from "../../global-state/buffering-provider";
 import { useBottomMessageUpdate } from "../../global-state/bottom-message-provider";
 import { useMuted } from "../../global-state/muted-provider";
+import { Loader } from "../misc/loader/loader";
 
 export default function Moods() {
   const [moods, setMoods] = useState([] as Array<string>);
+  const [fetchingMoods, setFetchingMoods] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [selected, setSelected] = useState("");
   const [music, setMusic] = useState<Music>();
@@ -20,8 +22,10 @@ export default function Moods() {
 
   useEffect(() => {
     async function fetchMoods() {
+      setFetchingMoods(true);
       let fetchedMoods = await fireBaseHelper.fetchMoods();
       setMoods(() => fetchedMoods);
+      setFetchingMoods(false);
     }
 
     fetchMoods();
@@ -51,15 +55,19 @@ export default function Moods() {
   return (
     <div id="parent" style={{ backgroundImage: `url(${bg})` }}>
       <div id="moods">
-        {moods.map((value) => (
-          <Mood
-            onClick={() => setSelected(value)}
-            mood={value}
-            playMusic={playMusic}
-            key={value}
-            isSelected={selected === value}
-          ></Mood>
-        ))}
+        {fetchingMoods ? (
+          <Loader />
+        ) : (
+          moods.map((value) => (
+            <Mood
+              onClick={() => setSelected(value)}
+              mood={value}
+              playMusic={playMusic}
+              key={value}
+              isSelected={selected === value}
+            ></Mood>
+          ))
+        )}
         <ReactPlayer
           className="react-player"
           onStart={() => {
