@@ -9,15 +9,16 @@ import { useUser, useUserUpdate } from "../../global-state/user-provider";
 import Helpers from "../../helpers/helpers";
 import LoginSignup from "../login-signup/login-signup";
 
-import verified from "../../assets/verified.svg";
-import logout from "../../assets/logout.svg";
-
 import "./profile.scss";
 import { IconButton } from "../misc/icon-button/icon-button";
 import Badge from "../../types/badge";
-import profile from "../../assets/profile.svg";
-import edit from "../../assets/edit.svg";
 import { useState } from "react";
+
+import verified from "../../assets/verified.svg";
+import logout from "../../assets/logout.svg";
+import editImage from "../../assets/edit_image.svg";
+import defaultProfile from "../../assets/default_profile.png";
+import edit from "../../assets/edit.svg";
 
 export default function Profile() {
   const [hasSentVerification, setHasSentVerification] = useState(false);
@@ -40,11 +41,19 @@ export default function Profile() {
     >
       <div className="profile-card">
         <div className="user-card">
-          <img
-            src={user.imagesrc ?? profile}
-            alt="user_image"
-            className="user-image"
-          />
+          <div className="user-image">
+            <img
+              src={user.imagesrc ?? defaultProfile}
+              alt="user_image"
+              className="image"
+            />
+            <IconButton
+              icon={editImage}
+              isLoading={false}
+              className="edit"
+              onClick={() => console.log("edit")}
+            />
+          </div>
           <div className="user-details">
             <div className="user-status">
               <h3 className="user-name">
