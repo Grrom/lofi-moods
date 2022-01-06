@@ -35,7 +35,8 @@ export default function Profile() {
       let image = await fireBaseHelper.getUserImage(user!.id);
       setUserImage(image);
     }
-    if (userImage === null && user !== null) getImage();
+    if ((userImage === null || userImage === "refetch") && user !== null)
+      getImage();
   }, [user, userImage]);
 
   if (user === null) {
@@ -70,7 +71,7 @@ export default function Profile() {
                     Helpers.showLoading("Uploading Image");
                     if (await fireBaseHelper.uploadImage(user.id, image)) {
                       Helpers.successToast("Image Successfully uploaded!");
-                      setUserImage(null);
+                      setUserImage("refetch");
                     } else {
                       Helpers.errorToast("Failed to upload image");
                     }
