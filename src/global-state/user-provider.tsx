@@ -5,7 +5,7 @@ import { authenticationHelper } from "../App";
 import { providerProps } from "../types/interfaces";
 import LofiMoodsUser from "../types/user";
 
-export const UserContext = React.createContext({} as LofiMoodsUser);
+export const UserContext = React.createContext<LofiMoodsUser | null>(null);
 export const UserContextUpdate = React.createContext(
   (value: User | null) => {}
 );
@@ -19,7 +19,7 @@ export function useUserUpdate() {
 }
 
 export default function UserProvider({ children }: providerProps) {
-  const [user, setUser] = useState({} as LofiMoodsUser);
+  const [user, setUser] = useState<LofiMoodsUser | null>(null);
   function updateUser(user: User | null) {
     if (user !== null) {
       setUser(
@@ -32,7 +32,7 @@ export default function UserProvider({ children }: providerProps) {
           )
       );
     } else {
-      setUser(() => ({} as LofiMoodsUser));
+      setUser(() => null);
     }
   }
 

@@ -32,13 +32,13 @@ export default function Profile() {
 
   useEffect(() => {
     async function getImage() {
-      let image = await fireBaseHelper.getUserImage(user.id);
+      let image = await fireBaseHelper.getUserImage(user!.id);
       setUserImage(image);
     }
-    if (userImage === null && user.id !== undefined) getImage();
-  }, [user.id, userImage]);
+    if (userImage === null && user !== null) getImage();
+  }, [user, userImage]);
 
-  if (user.name === undefined) {
+  if (user === null) {
     return <LoginModal />;
   }
 
@@ -91,18 +91,20 @@ export default function Profile() {
                     Helpers.textInputAlert(
                       "Enter New Display name",
                       async (newName) => {
-                        Helpers.showLoading("Updating Display name");
-                        try {
-                          await authenticationHelper.updateName(newName);
-                          Helpers.successToast("Display name updated!");
-                          const unsubscribe =
-                            authenticationHelper.auth.onAuthStateChanged(
-                              (user) => userUpdate(user)
-                            );
-                          authenticationHelper.triggerUpdate();
-                          unsubscribe();
-                        } catch (e) {
-                          Helpers.errorToast(Helpers.getFirebaseError(e));
+                        if (newName.length > 0) {
+                          Helpers.showLoading("Updating Display name");
+                          try {
+                            await authenticationHelper.updateName(newName);
+                            Helpers.successToast("Display name updated!");
+                            const unsubscribe =
+                              authenticationHelper.auth.onAuthStateChanged(
+                                (user) => userUpdate(user)
+                              );
+                            authenticationHelper.triggerUpdate();
+                            unsubscribe();
+                          } catch (e) {
+                            Helpers.errorToast(Helpers.getFirebaseError(e));
+                          }
                         }
                       }
                     );
