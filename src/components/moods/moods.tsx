@@ -10,15 +10,16 @@ import { useBottomMessageUpdate } from "../../global-state/bottom-message-provid
 import { useMuted } from "../../global-state/muted-provider";
 import { Loader } from "../misc/loader/loader";
 
-export default function Moods() {
+interface _props {
+  setBg: (bg: string) => void;
+}
+
+export default function Moods({ setBg }: _props) {
   const [moods, setMoods] = useState([] as Array<string>);
   const [fetchingMoods, setFetchingMoods] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [selected, setSelected] = useState("");
   const [music, setMusic] = useState<Music>();
-  const [bg, setBg] = useState(
-    "https://i.ytimg.com/vi/_ITiwPMUzho/maxresdefault.jpg"
-  );
 
   useEffect(() => {
     async function fetchMoods() {
@@ -53,47 +54,45 @@ export default function Moods() {
   }
 
   return (
-    <div id="parent" style={{ backgroundImage: `url(${bg})` }}>
-      <div id="moods">
-        {fetchingMoods ? (
-          <Loader />
-        ) : (
-          moods.map((value) => (
-            <Mood
-              onClick={() => setSelected(value)}
-              mood={value}
-              playMusic={playMusic}
-              key={value}
-              isSelected={selected === value}
-            ></Mood>
-          ))
-        )}
-        <ReactPlayer
-          className="react-player"
-          onStart={() => {
-            setBottomMessage("Now Playing: " + music?.title);
-            checkAndSetBg(music?.link);
-          }}
-          onError={() =>
-            setBottomMessage("Something went wrong while fetching the music")
-          }
-          onBuffer={() => setIsBuffering(true)}
-          onBufferEnd={() => setIsBuffering(false)}
-          playing={isPlaying}
-          muted={isMuted}
-          controls={true}
-          autoPlay={true}
-          url={`https://www.youtube.com/watch?v=${music?.link}`}
-          loop={true}
-          config={{
-            playerVars: {
-              height: "144px",
-              width: "256px",
-              vq: "small",
-            },
-          }}
-        />
-      </div>
+    <div id="moods">
+      {fetchingMoods ? (
+        <Loader />
+      ) : (
+        moods.map((value) => (
+          <Mood
+            onClick={() => setSelected(value)}
+            mood={value}
+            playMusic={playMusic}
+            key={value}
+            isSelected={selected === value}
+          ></Mood>
+        ))
+      )}
+      <ReactPlayer
+        className="react-player"
+        onStart={() => {
+          setBottomMessage("Now Playing: " + music?.title);
+          checkAndSetBg(music?.link);
+        }}
+        onError={() =>
+          setBottomMessage("Something went wrong while fetching the music")
+        }
+        onBuffer={() => setIsBuffering(true)}
+        onBufferEnd={() => setIsBuffering(false)}
+        playing={isPlaying}
+        muted={isMuted}
+        controls={true}
+        autoPlay={true}
+        url={`https://www.youtube.com/watch?v=${music?.link}`}
+        loop={true}
+        config={{
+          playerVars: {
+            height: "144px",
+            width: "256px",
+            vq: "small",
+          },
+        }}
+      />
     </div>
   );
 }

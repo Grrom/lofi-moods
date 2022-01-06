@@ -13,6 +13,8 @@ import ModalProvider from "./global-state/profile-modal-provider";
 import Profile from "./components/profile/profile";
 import AuthenticationHelper from "./helpers/authentication-helper";
 import UserProvider from "./global-state/user-provider";
+import LiveChat from "./components/live-chat/live-chat";
+import { useState } from "react";
 
 export const authenticationHelper = new AuthenticationHelper(
   initializeApp({
@@ -29,6 +31,10 @@ export const authenticationHelper = new AuthenticationHelper(
 export const fireBaseHelper = new FireBaseHelper();
 
 function App() {
+  const [bg, setBg] = useState(
+    "https://i.ytimg.com/vi/_ITiwPMUzho/maxresdefault.jpg"
+  );
+
   return (
     <div id="app">
       <BufferingProvider>
@@ -36,9 +42,14 @@ function App() {
           <MutedProvider>
             <ModalProvider>
               <UserProvider>
-                <Controls />
-                <Moods />
-                <Profile />
+                <>
+                  <Controls />
+                  <Profile />
+                  <div id="parent" style={{ backgroundImage: `url(${bg})` }}>
+                    <Moods setBg={(bg) => setBg(bg)} />
+                    <LiveChat />
+                  </div>
+                </>
               </UserProvider>
             </ModalProvider>
           </MutedProvider>

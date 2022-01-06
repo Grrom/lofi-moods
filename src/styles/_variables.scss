@@ -17,8 +17,11 @@ $bg-dark: rgb(136, 136, 136);
 $blackLight: lighten(black, 80%);
 
 $translucentBlack: rgba(black, 0.8);
-$translucentBlack2: rgba(black, 0.4);
+$translucentBlack2: rgba(black, 0.6);
+$translucentBlack3: rgba(black, 0.4);
 $translucentGray: rgba(gray, 0.8);
 
 // SIZES
+$borderRadius: 40px;
+
 $desktop: 900px;
