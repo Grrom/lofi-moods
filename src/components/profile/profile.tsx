@@ -33,7 +33,6 @@ export default function Profile() {
   useEffect(() => {
     async function getImage() {
       let image = await fireBaseHelper.getUserImage(user.id);
-      console.log(image);
       setUserImage(image);
     }
     if (userImage === null && user.id !== undefined) getImage();
@@ -62,7 +61,22 @@ export default function Profile() {
               icon={editImage}
               isLoading={false}
               className="edit"
-              onClick={() => console.log("edit")}
+              onClick={() =>
+                Helpers.fileInputAlert(
+                  "Upload an image",
+                  "image/*",
+                  async (image) => {
+                    //TO-DO: shrink image first before uploading
+                    Helpers.showLoading("Uploading Image");
+                    if (await fireBaseHelper.uploadImage(user.id, image)) {
+                      Helpers.successToast("Image Successfully uploaded!");
+                      setUserImage(null);
+                    } else {
+                      Helpers.errorToast("Failed to upload image");
+                    }
+                  }
+                )
+              }
             />
           </div>
           <div className="user-details">

@@ -63,6 +63,25 @@ export default class Helpers {
     });
   };
 
+  static fileInputAlert = (
+    question: string,
+    accept: string,
+    onConfirm: (value: any) => void
+  ) => {
+    Swal.fire({
+      title: question,
+      input: "file",
+      inputAttributes: {
+        accept: accept,
+      },
+      showCancelButton: true,
+    }).then((value) => {
+      if (value.isConfirmed) {
+        onConfirm(value.value);
+      }
+    });
+  };
+
   static successToast = (message: string, duration?: number) => {
     fireToast({
       icon: "success",

@@ -1,5 +1,5 @@
 import { collection, getDocs, getFirestore } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import Music from "../types/music";
 
 export default class FireBaseHelper {
@@ -27,13 +27,30 @@ export default class FireBaseHelper {
   };
 
   public getUserImage = async (userId: string): Promise<string | null> => {
-    console.log("getting image");
     try {
       return await getDownloadURL(
         ref(this.storage, `user_images/${userId}.png`)
       );
     } catch {
       return null;
+    }
+  };
+
+  public uploadImage = async (id: string, file: any): Promise<boolean> => {
+    return await this.uploadFile(id, file, "user_images", "png");
+  };
+
+  private uploadFile = async (
+    id: string,
+    file: any,
+    directory: string,
+    type: string
+  ) => {
+    try {
+      await uploadBytes(ref(this.storage, `${directory}/${id}.${type}`), file);
+      return true;
+    } catch {
+      return false;
     }
   };
 }
