@@ -1,9 +1,7 @@
-@import "../../styles/presets";
+@import "../../styles/variables";
+@import "../../styles/keyframes";
 
 #bottom-indicator {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -11,4 +9,15 @@
   background-color: $translucentBlack;
   text-align: center;
   padding: 8px 0;
+
+  * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .marquee {
+    animation: marquee 15s linear infinite;
+    white-space: nowrap;
+  }
 }
