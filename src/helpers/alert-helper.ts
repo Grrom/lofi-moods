@@ -9,7 +9,7 @@ interface fireToastProps {
 function fireToast({ icon, message, duration }: fireToastProps) {
   Swal.mixin({
     toast: true,
-    position: "top-end",
+    position: "top-start",
     showConfirmButton: false,
     timer: duration ?? 3000,
     timerProgressBar: true,
@@ -47,6 +47,14 @@ export default class AlertHelper {
     });
   };
 
+  static successToast = (message: string, duration?: number) => {
+    fireToast({
+      icon: "success",
+      message: message,
+      duration: duration,
+    });
+  };
+
   static textInputAlert = (
     question: string,
     onConfirm: (value: any) => void
@@ -79,14 +87,6 @@ export default class AlertHelper {
       if (value.isConfirmed) {
         onConfirm(value.value);
       }
-    });
-  };
-
-  static successToast = (message: string, duration?: number) => {
-    fireToast({
-      icon: "success",
-      message: message,
-      duration: duration,
     });
   };
 

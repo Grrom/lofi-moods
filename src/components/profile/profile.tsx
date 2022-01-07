@@ -27,6 +27,7 @@ export default function Profile() {
   const [userImage, setUserImage] = useState<string | null>(null);
 
   const isOpen = useModalProfile();
+  const toggleModal = useModalProfileUpdate();
 
   const user = useUser();
   const userUpdate = useUserUpdate();
@@ -50,6 +51,9 @@ export default function Profile() {
       ariaHideApp={false}
       className="profile-modal"
       overlayClassName="overlay"
+      shouldCloseOnOverlayClick={true}
+      shouldCloseOnEsc={true}
+      onRequestClose={() => toggleModal()}
     >
       <div className="profile-card">
         <div className="user-card">
