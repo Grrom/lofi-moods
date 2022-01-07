@@ -15,6 +15,7 @@ import AuthenticationHelper from "./helpers/authentication-helper";
 import UserProvider from "./global-state/user-provider";
 import LiveChat from "./components/live-chat/live-chat";
 import { useState } from "react";
+import ChatShownProvider from "./global-state/chat-provider";
 
 export const authenticationHelper = new AuthenticationHelper(
   initializeApp({
@@ -42,14 +43,16 @@ function App() {
           <MutedProvider>
             <ModalProvider>
               <UserProvider>
-                <>
-                  <Controls />
-                  <Profile />
-                  <div id="parent" style={{ backgroundImage: `url(${bg})` }}>
-                    <Moods setBg={(bg) => setBg(bg)} />
-                    <LiveChat />
-                  </div>
-                </>
+                <ChatShownProvider>
+                  <>
+                    <Controls />
+                    <Profile />
+                    <div id="parent" style={{ backgroundImage: `url(${bg})` }}>
+                      <Moods setBg={(bg) => setBg(bg)} />
+                      <LiveChat />
+                    </div>
+                  </>
+                </ChatShownProvider>
               </UserProvider>
             </ModalProvider>
           </MutedProvider>

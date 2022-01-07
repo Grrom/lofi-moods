@@ -15,4 +15,12 @@
 
   border-radius: 0 0 0 $borderRadius;
   padding: 0 20px;
+
+  @include mobile {
+    max-width: 100vw;
+    border-radius: 0;
+    padding: 0;
+
+    background-color: black;
+  }
 }
