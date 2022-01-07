@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useContext } from "react";
 import { providerProps } from "../types/interfaces";
 
-export const ChatShownContext = React.createContext(true);
+export const ChatShownContext = React.createContext(false);
 export const ChatShownContextUpdate = React.createContext(() => {});
 
 export function useChatShown() {
@@ -14,7 +14,7 @@ export function useChatShownUpdate() {
 }
 
 export default function ChatShownProvider({ children }: providerProps) {
-  const [isChatShown, setIsChatShown] = useState(true);
+  const [isChatShown, setIsChatShown] = useState(false);
   function toggleChatShown() {
     setIsChatShown((current) => !current);
   }

@@ -17,7 +17,8 @@
   }
 
   .marquee {
-    animation: marquee 15s linear infinite;
     white-space: nowrap;
+    transform: translate3d(calc(-25% + 20vw), 0, 0);
+    animation: marquee 5s linear infinite;
   }
 }
