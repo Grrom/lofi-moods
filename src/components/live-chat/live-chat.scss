@@ -12,8 +12,36 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+    position: relative;
 
     @extend .default-padding;
+
+    .chat-box-container {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      bottom: 0;
+      padding-bottom: 4px;
+      width: 90%;
+      box-sizing: border-box;
+
+      .chat-box {
+        background: none;
+        border: none;
+        border-bottom: 2px solid $bg-dark;
+        color: white;
+        width: 100%;
+        resize: none;
+        height: 50px;
+        background-color: $translucentBlack2;
+
+        @extend .rounded-border;
+      }
+
+      .chat-box:focus {
+        outline: none;
+      }
+    }
 
     .chat-bubble {
       color: white;
