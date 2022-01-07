@@ -14,5 +14,36 @@
     box-sizing: border-box;
 
     @extend .default-padding;
+
+    .chat-bubble {
+      color: white;
+      display: flex;
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+
+      @extend .circular-border;
+
+      .image {
+        height: 32px;
+        width: 32px;
+        padding-right: 8px;
+      }
+
+      .message-block {
+        .sender-name {
+          font-weight: bold;
+
+          padding-right: 8px;
+        }
+
+        .date-sent {
+          display: block;
+          padding-right: 8px;
+          font-size: 12px;
+          color: $bg-dark;
+        }
+      }
+    }
   }
 }
