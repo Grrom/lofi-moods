@@ -6,36 +6,35 @@
   margin-bottom: 36px;
   margin-top: 42px;
   background-color: transparent;
+  position: relative;
 
   #live-chat {
-    background-color: $translucentBlack2;
+    background-color: $translucentBlack1;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
     position: relative;
-
-    @extend .default-padding;
+    backdrop-filter: blur(4px);
 
     .chat-box-container {
       display: flex;
       align-items: center;
-      position: absolute;
-      bottom: 0;
-      padding-bottom: 4px;
-      width: 90%;
+      margin: auto;
+      width: 92%;
       box-sizing: border-box;
+      border-bottom: 2px solid $bg-dark;
+      background-color: $translucentBlack2;
+
+      @extend .rounded-border;
 
       .chat-box {
+        padding: 8px;
         background: none;
         border: none;
-        border-bottom: 2px solid $bg-dark;
         color: white;
         width: 100%;
         resize: none;
         height: 50px;
-        background-color: $translucentBlack2;
-
-        @extend .rounded-border;
       }
 
       .chat-box:focus {
@@ -43,33 +42,41 @@
       }
     }
 
-    .chat-bubble {
-      color: white;
-      display: flex;
-      width: 100%;
-      padding: 8px;
+    .chat-list-view {
+      overflow-x: auto;
       box-sizing: border-box;
+      max-height: 90%;
 
-      @extend .circular-border;
+      @extend .default-padding;
 
-      .image {
-        height: 32px;
-        width: 32px;
-        padding-right: 8px;
-      }
+      .chat-bubble {
+        color: white;
+        display: flex;
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
 
-      .message-block {
-        .sender-name {
-          font-weight: bold;
+        @extend .circular-border;
 
+        .image {
+          height: 32px;
+          width: 32px;
           padding-right: 8px;
         }
 
-        .date-sent {
-          display: block;
-          padding-right: 8px;
-          font-size: 12px;
-          color: $bg-dark;
+        .message-block {
+          .sender-name {
+            font-weight: bold;
+
+            padding-right: 8px;
+          }
+
+          .date-sent {
+            display: block;
+            padding-right: 8px;
+            font-size: 12px;
+            color: $bg-dark;
+          }
         }
       }
     }
