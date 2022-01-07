@@ -6,11 +6,11 @@ import send from "../../assets/send.svg";
 import { useEffect } from "react";
 import Helpers from "../../helpers/helpers";
 import { useChatShown } from "../../global-state/chat-provider";
-import { useBottomMessage } from "../../global-state/bottom-message-provider";
+import { useMood } from "../../global-state/mood-provider";
 
 export default function LiveChat() {
   const chatShown = useChatShown();
-  const playing = useBottomMessage().includes("Playing"); //improve this
+  const playing = useMood();
 
   useEffect(() => {
     if (chatShown && playing) {

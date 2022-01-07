@@ -16,6 +16,7 @@ import UserProvider from "./global-state/user-provider";
 import LiveChat from "./components/live-chat/live-chat";
 import { useState } from "react";
 import ChatShownProvider from "./global-state/chat-provider";
+import MoodProvider from "./global-state/mood-provider";
 
 export const authenticationHelper = new AuthenticationHelper(
   initializeApp({
@@ -44,14 +45,19 @@ function App() {
             <ModalProvider>
               <UserProvider>
                 <ChatShownProvider>
-                  <>
-                    <Controls />
-                    <Profile />
-                    <div id="parent" style={{ backgroundImage: `url(${bg})` }}>
-                      <Moods setBg={(bg) => setBg(bg)} />
-                      <LiveChat />
-                    </div>
-                  </>
+                  <MoodProvider>
+                    <>
+                      <Controls />
+                      <Profile />
+                      <div
+                        id="parent"
+                        style={{ backgroundImage: `url(${bg})` }}
+                      >
+                        <Moods setBg={(bg) => setBg(bg)} />
+                        <LiveChat />
+                      </div>
+                    </>
+                  </MoodProvider>
                 </ChatShownProvider>
               </UserProvider>
             </ModalProvider>

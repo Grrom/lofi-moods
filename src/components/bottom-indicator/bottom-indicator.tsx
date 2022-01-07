@@ -1,5 +1,4 @@
 import { useLayoutEffect, useState } from "react";
-import { cursorTo } from "readline";
 import { useBottomMessage } from "../../global-state/bottom-message-provider";
 import { useBuffering } from "../../global-state/buffering-provider";
 import Helpers from "../../helpers/helpers";
