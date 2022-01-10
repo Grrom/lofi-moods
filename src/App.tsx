@@ -1,7 +1,7 @@
 import "./App.scss";
 
 import Moods from "./components/moods/moods";
-import FireBaseHelper from "./helpers/FirebaseHelper";
+import FireBaseHelper from "./helpers/firebase-helpers";
 
 import { initializeApp } from "firebase/app";
 import BottomIndicator from "./components/bottom-indicator/bottom-indicator";

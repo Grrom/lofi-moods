@@ -44,6 +44,7 @@ export default function LiveChat() {
   }, [mood]);
 
   // TODO: add data to the users collection
+  // TODO: reduce the need to re-fetch these every time the messages tab is toggled
 
   return (
     <div id="live-chat-container">

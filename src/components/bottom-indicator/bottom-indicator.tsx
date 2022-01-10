@@ -23,7 +23,7 @@ export default function BottomIndicator() {
 
   return (
     <span id="bottom-indicator">
-      <span className={height > 36 ? "marquee" : ""}>
+      <span className={height > 40 ? "marquee" : ""}>
         {message}
         {isBuffering && <MiniLoader />}
       </span>
