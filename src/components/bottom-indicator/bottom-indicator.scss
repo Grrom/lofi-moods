@@ -1,5 +1,6 @@
 @import "../../styles/variables";
 @import "../../styles/keyframes";
+@import "../../styles/mixins";
 
 #bottom-indicator {
   position: absolute;
@@ -20,5 +21,9 @@
     white-space: nowrap;
     transform: translate3d(calc(-25% + 20vw), 0, 0);
     animation: marquee 5s linear infinite;
+  }
+
+  @include mobile {
+    background-color: black;
   }
 }
