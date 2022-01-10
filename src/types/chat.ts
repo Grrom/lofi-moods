@@ -15,6 +15,6 @@ export default class Chat {
     this.senderId = senderId;
     this.message = message;
     this.dateSent = dateSent;
-    this.isVerified = isVerified ?? false;
+    this.isVerified = isVerified;
   }
 }

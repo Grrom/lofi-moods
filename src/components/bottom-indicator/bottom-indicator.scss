@@ -7,7 +7,7 @@
   bottom: 0;
   width: 100%;
   color: white;
-  background-color: $translucentBlack;
+  background-color: black;
   text-align: center;
   padding: 8px 0;
 
@@ -21,9 +21,5 @@
     white-space: nowrap;
     transform: translate3d(calc(-25% + 20vw), 0, 0);
     animation: marquee 5s linear infinite;
-  }
-
-  @include mobile {
-    background-color: black;
   }
 }

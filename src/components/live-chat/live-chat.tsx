@@ -13,6 +13,7 @@ import login from "../../assets/login.svg";
 import { useModalProfileUpdate } from "../../global-state/profile-modal-provider";
 import { fireBaseHelper } from "../../App";
 import Chat from "../../types/chat";
+import { Loader } from "../misc/loader/loader";
 
 export default function LiveChat() {
   const chatShown = useChatShown();
@@ -23,8 +24,6 @@ export default function LiveChat() {
 
   const [chatIsFetching, setChatIsFetching] = useState(false);
   const [chats, setChats] = useState<Array<Chat>>([]);
-
-  useEffect(() => console.log(chatIsFetching + " livechat"), [chatIsFetching]);
 
   useEffect(() => {
     if (chatShown && mood) {
@@ -44,22 +43,30 @@ export default function LiveChat() {
     getChats();
   }, [mood]);
 
+  // TODO: add data to the users collection
+
   return (
     <div id="live-chat-container">
       {chatShown && mood && (
         <div id="live-chat">
           <div className="chat-list-view">
-            {chats.map((chat, index) => {
-              return (
-                <ChatBubble
-                  key={index}
-                  senderId={chat.senderId}
-                  message={chat.message}
-                  dateSent={chat.dateSent}
-                  isVerified={true}
-                />
-              );
-            })}
+            {chatIsFetching ? (
+              <div className="loader-container">
+                <Loader />
+              </div>
+            ) : (
+              chats.map((chat, index) => {
+                return (
+                  <ChatBubble
+                    key={index}
+                    senderId={chat.senderId}
+                    message={chat.message}
+                    dateSent={chat.dateSent}
+                    isVerified={chat.isVerified}
+                  />
+                );
+              })
+            )}
           </div>
           {user !== null ? (
             <div className="chat-box-container">

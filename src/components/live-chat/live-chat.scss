@@ -24,6 +24,9 @@
     box-sizing: border-box;
     position: relative;
     backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     .chat-box-container {
       display: flex;
@@ -33,6 +36,7 @@
       box-sizing: border-box;
       border-bottom: 2px solid $bg-dark;
       background-color: $translucentBlack2;
+      margin-bottom: 16px;
 
       @extend .rounded-border;
 
@@ -56,11 +60,17 @@
     }
 
     .chat-list-view {
+      flex-grow: 1;
       overflow-x: auto;
       box-sizing: border-box;
-      max-height: 90%;
 
       @extend .default-padding;
+
+      .loader-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
       .chat-bubble {
         color: white;
