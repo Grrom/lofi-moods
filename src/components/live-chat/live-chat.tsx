@@ -70,7 +70,11 @@ export default function LiveChat() {
           </div>
           {user !== null ? (
             <div className="chat-box-container">
-              <textarea className="chat-box" rows={1} />
+              <textarea
+                className="chat-box"
+                placeholder="Type something..."
+                rows={1}
+              />
               <IconButton
                 icon={send}
                 isLoading={false}
