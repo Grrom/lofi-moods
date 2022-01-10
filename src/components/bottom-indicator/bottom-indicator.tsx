@@ -8,12 +8,14 @@ import "./bottom-indicator.scss";
 export default function BottomIndicator() {
   const isBuffering = useBuffering();
   const message = useBottomMessage();
-  const [height, setHeight] = useState(0);
+  const [isMarquee, setIsMarquee] = useState(false);
 
   useLayoutEffect(() => {
     function updateSize() {
-      setHeight(
-        Helpers.getById("bottom-indicator")?.getBoundingClientRect().height ?? 0
+      let element = Helpers.getById("bottom-indicator");
+      setIsMarquee(
+        element!.scrollHeight > element!.clientHeight ||
+          element!.scrollWidth > element!.clientWidth
       );
     }
     window.addEventListener("resize", updateSize);
@@ -23,10 +25,10 @@ export default function BottomIndicator() {
 
   return (
     <span id="bottom-indicator">
-      <span className={height > 40 ? "marquee" : ""}>
+      <div className={isMarquee ? "marquee" : ""}>
         {message}
         {isBuffering && <MiniLoader />}
-      </span>
+      </div>
     </span>
   );
 }

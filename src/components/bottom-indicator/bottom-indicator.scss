@@ -9,17 +9,18 @@
   color: white;
   background-color: black;
   text-align: center;
-  padding: 8px 0;
+  height: 36px;
+  padding: 6.5px 0;
+  box-sizing: border-box;
 
   * {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
   }
 
   .marquee {
     white-space: nowrap;
-    transform: translate3d(calc(-25% + 20vw), 0, 0);
-    animation: marquee 5s linear infinite;
+    animation: marquee 7s linear infinite;
   }
 }
