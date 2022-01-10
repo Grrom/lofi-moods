@@ -1,5 +1,12 @@
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+} from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import Chat from "../types/chat";
 import Music from "../types/music";
 
 export default class FireBaseHelper {
@@ -36,9 +43,37 @@ export default class FireBaseHelper {
     }
   };
 
+  public getUserName = async (userId: string): Promise<string | null> => {
+    try {
+      let user = await getDoc(doc(collection(this.firestore, "users"), userId));
+      return user.data()?.name;
+    } catch (e) {
+      return "";
+    }
+  };
+
   public uploadImage = async (id: string, file: any): Promise<boolean> => {
     return await this.uploadFile(id, file, "user_images", "png");
   };
+
+  public async getChats(mood: string) {
+    const querySnapshot = await getDocs(
+      collection(this.firestore, `${mood}_chatroom`)
+    );
+    let datas: Array<Chat> = [];
+    querySnapshot.forEach((doc) => {
+      let data = doc.data();
+      datas.push(
+        new Chat(
+          data.senderId,
+          data.message,
+          data.dateSent,
+          data.senderVerified
+        )
+      );
+    });
+    return datas;
+  }
 
   private uploadFile = async (
     id: string,

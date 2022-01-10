@@ -13,4 +13,10 @@ export default class Helpers {
       errorMessage.length
     );
   };
+
+  static toDateTime = (secs: number) => {
+    var t = new Date(1970, 0, 1);
+    t.setSeconds(secs);
+    return t;
+  };
 }

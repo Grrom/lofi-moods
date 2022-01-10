@@ -13,8 +13,6 @@ import {
 } from "../../global-state/profile-modal-provider";
 import { useChatShownUpdate } from "../../global-state/chat-provider";
 import { useMood } from "../../global-state/mood-provider";
-import { useEffect, useState } from "react";
-import Helpers from "../../helpers/helpers";
 import AlertHelper from "../../helpers/alert-helper";
 
 export default function Controls() {
@@ -27,12 +25,6 @@ export default function Controls() {
   const toggleChat = useChatShownUpdate();
 
   const mood = useMood();
-
-  const [chatPopoverOpen, setChatPopoverOpen] = useState(false);
-
-  useEffect(() => {
-    console.log(chatPopoverOpen);
-  }, [chatPopoverOpen]);
 
   return (
     <div id="controls" className={profileToggled ? "box-shadow" : ""}>

@@ -1,14 +1,16 @@
+import { Timestamp } from "@firebase/firestore";
+
 export default class Chat {
   senderId: string;
   message: string;
-  dateSent: Date;
+  dateSent: Timestamp;
   isVerified: boolean;
 
   constructor(
     senderId: string,
     message: string,
-    dateSent: Date,
-    isVerified?: boolean
+    dateSent: Timestamp,
+    isVerified: boolean
   ) {
     this.senderId = senderId;
     this.message = message;
