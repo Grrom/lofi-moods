@@ -12,6 +12,10 @@ import {
   useModalProfileUpdate,
 } from "../../global-state/profile-modal-provider";
 import { useChatShownUpdate } from "../../global-state/chat-provider";
+import { useMood } from "../../global-state/mood-provider";
+import { useEffect, useState } from "react";
+import Helpers from "../../helpers/helpers";
+import AlertHelper from "../../helpers/alert-helper";
 
 export default function Controls() {
   const toggleMuted = useMutedUpdate();
@@ -21,6 +25,15 @@ export default function Controls() {
   const profileToggled = useModalProfile();
 
   const toggleChat = useChatShownUpdate();
+
+  const mood = useMood();
+
+  const [chatPopoverOpen, setChatPopoverOpen] = useState(false);
+
+  useEffect(() => {
+    console.log(chatPopoverOpen);
+  }, [chatPopoverOpen]);
+
   return (
     <div id="controls" className={profileToggled ? "box-shadow" : ""}>
       <IconButton
@@ -33,7 +46,15 @@ export default function Controls() {
         isLoading={false}
         icon={profile}
       />
-      <IconButton onClick={() => toggleChat()} isLoading={false} icon={chat} />
+      <IconButton
+        onClick={() =>
+          mood !== undefined
+            ? toggleChat()
+            : AlertHelper.errorToast("Choose a mood first", 600, false)
+        }
+        isLoading={false}
+        icon={chat}
+      />
     </div>
   );
 }

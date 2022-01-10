@@ -4,15 +4,16 @@ interface fireToastProps {
   message: string;
   icon: SweetAlertIcon;
   duration?: number;
+  showTimer?: boolean;
 }
 
-function fireToast({ icon, message, duration }: fireToastProps) {
+function fireToast({ icon, message, duration, showTimer }: fireToastProps) {
   Swal.mixin({
     toast: true,
     position: "top-start",
     showConfirmButton: false,
     timer: duration ?? 3000,
-    timerProgressBar: true,
+    timerProgressBar: showTimer ?? true,
 
     didOpen: (toast) => {
       toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -31,11 +32,16 @@ interface confirmDialogProps {
 }
 
 export default class AlertHelper {
-  static errorToast = (message: string, duration?: number) => {
+  static errorToast = (
+    message: string,
+    duration?: number,
+    showTimer?: boolean
+  ) => {
     fireToast({
       icon: "error",
       message: message,
       duration: duration,
+      showTimer: showTimer,
     });
   };
 
