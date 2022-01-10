@@ -2,15 +2,22 @@ import { IconButton } from "../misc/icon-button/icon-button";
 import ChatBubble from "./chat-bubble";
 import "./live-chat.scss";
 
-import send from "../../assets/send.svg";
 import { useEffect } from "react";
 import Helpers from "../../helpers/helpers";
 import { useChatShown } from "../../global-state/chat-provider";
 import { useMood } from "../../global-state/mood-provider";
+import { useUser } from "../../global-state/user-provider";
+
+import send from "../../assets/send.svg";
+import login from "../../assets/login.svg";
+import { useModalProfileUpdate } from "../../global-state/profile-modal-provider";
 
 export default function LiveChat() {
   const chatShown = useChatShown();
   const playing = useMood();
+
+  const user = useUser();
+  const toggleProfileModal = useModalProfileUpdate();
 
   useEffect(() => {
     if (chatShown && playing) {
@@ -35,14 +42,25 @@ export default function LiveChat() {
               />
             ))}
           </div>
-          <div className="chat-box-container">
-            <textarea className="chat-box" rows={1} />
+          {user !== null ? (
+            <div className="chat-box-container">
+              <textarea className="chat-box" rows={1} />
+              <IconButton
+                icon={send}
+                isLoading={false}
+                className="send-button"
+                onClick={() => console.log("send")}
+              />
+            </div>
+          ) : (
             <IconButton
-              icon={send}
+              icon={login}
               isLoading={false}
-              onClick={() => console.log("send")}
+              onClick={() => toggleProfileModal()}
+              className="prompt-login"
+              text="Login to Join the chat"
             />
-          </div>
+          )}
         </div>
       )}
     </div>

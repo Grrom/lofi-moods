@@ -1,4 +1,5 @@
 @import "../../styles/presets";
+@import "../../styles/hovers";
 
 #live-chat-container {
   width: 90%;
@@ -48,6 +49,10 @@
       .chat-box:focus {
         outline: none;
       }
+
+      .send-button {
+        z-index: inherit;
+      }
     }
 
     .chat-list-view {
@@ -87,6 +92,17 @@
           }
         }
       }
+    }
+
+    .prompt-login {
+      margin: 12px auto;
+      align-self: center;
+      color: white;
+      background-color: $secondary;
+      width: 90%;
+      height: 40px;
+
+      @extend .clickable;
     }
   }
 }
