@@ -33,7 +33,6 @@ export default function LiveChat() {
   const chatBottom = useRef<HTMLDivElement>(null);
 
   function scrollToBottom() {
-    console.log("scroll to bottom");
     chatBottom.current?.scrollIntoView({ behavior: "smooth" });
   }
 
@@ -46,8 +45,8 @@ export default function LiveChat() {
   }, [chatShown, mood]);
 
   useEffect(() => {
-    setChatIsFetching(true);
     if (mood !== undefined) {
+      setChatIsFetching(true);
       let unsubscribe = fireBaseHelper.listenLivechat(mood!, (newChats) => {
         newChats.sort((a, b) => a.dateSent.seconds - b.dateSent.seconds);
         setChats(() => newChats);
