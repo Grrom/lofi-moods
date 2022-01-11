@@ -63,8 +63,6 @@ export default class FireBaseHelper {
     let datas: Array<Chat> = [];
     querySnapshot.forEach((doc) => {
       let data = doc.data();
-      console.log(data.message);
-      console.log(data.senderVerified);
       datas.push(
         new Chat(
           data.senderId,

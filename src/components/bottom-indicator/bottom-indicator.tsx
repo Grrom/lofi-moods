@@ -11,22 +11,23 @@ export default function BottomIndicator() {
   const [isMarquee, setIsMarquee] = useState(false);
 
   useLayoutEffect(() => {
-    function updateSize() {
-      let element = Helpers.getById("bottom-indicator");
+    async function updateSize() {
+      let indicator = Helpers.getById("bottom-indicator");
+      let message = Helpers.getById("message");
       setIsMarquee(
-        element!.scrollHeight > element!.clientHeight ||
-          element!.scrollWidth > element!.clientWidth
+        message!.getBoundingClientRect().width >
+          indicator!.getBoundingClientRect().width
       );
     }
     window.addEventListener("resize", updateSize);
-    if (isBuffering === false) updateSize();
+    updateSize();
     return () => window.removeEventListener("resize", updateSize);
   }, [isBuffering]);
 
   return (
     <span id="bottom-indicator">
       <div className={isMarquee ? "marquee" : ""}>
-        {message}
+        <span id="message">{message}</span>
         {isBuffering && <MiniLoader />}
       </div>
     </span>

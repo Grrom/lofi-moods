@@ -10,6 +10,8 @@
   background-color: black;
   text-align: center;
   height: 36px;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: 6.5px 0;
   box-sizing: border-box;
 
@@ -20,7 +22,11 @@
   }
 
   .marquee {
-    white-space: nowrap;
     animation: marquee 7s linear infinite;
   }
+}
+#message {
+  overflow: visible;
+  display: inline;
+  white-space: nowrap;
 }
