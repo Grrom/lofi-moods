@@ -55,6 +55,8 @@ export default function LiveChat() {
               <div className="loader-container">
                 <Loader />
               </div>
+            ) : chats.length === 0 ? (
+              <div className="no-messages">No messages yet</div>
             ) : (
               chats.map((chat, index) => {
                 return (
