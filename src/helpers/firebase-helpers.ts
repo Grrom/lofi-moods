@@ -5,6 +5,10 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  limit,
+  onSnapshot,
+  orderBy,
+  query,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import Chat from "../types/chat";
@@ -53,9 +57,13 @@ export default class FireBaseHelper {
     }
   };
 
-  public async getChats(mood: string) {
+  public async getLastChat(mood: string, count: number) {
     const querySnapshot = await getDocs(
-      collection(this.firestore, `${mood}_chatroom`)
+      query(
+        collection(this.firestore, `${mood}_chatroom`),
+        orderBy("dateSent.seconds", "desc"),
+        limit(count)
+      )
     );
     let datas: Array<Chat> = [];
     querySnapshot.forEach((doc) => {
@@ -68,17 +76,36 @@ export default class FireBaseHelper {
   }
 
   public async sendChat(chat: Chat, mood: string) {
+    console.log("send", mood);
     try {
-      console.log(
-        await addDoc(
-          collection(this.firestore, `${mood}_chatroom`),
-          JSON.parse(JSON.stringify(chat))
-        )
+      await addDoc(
+        collection(this.firestore, `${mood}_chatroom`),
+        JSON.parse(JSON.stringify(chat))
       );
       return true;
     } catch (e) {
       return false;
     }
+  }
+
+  public listenLivechat(mood: string, callback: (data: Array<Chat>) => any) {
+    return onSnapshot(
+      query(
+        collection(this.firestore, `${mood}_chatroom`),
+        orderBy("dateSent.seconds", "desc"),
+        limit(24)
+      ),
+      (data) => {
+        let datas: Array<Chat> = [];
+        data.docs.forEach((document) => {
+          let doc = document.data();
+          datas.push(
+            new Chat(doc.senderId, doc.message, doc.dateSent, doc.isVerified)
+          );
+        });
+        callback(datas);
+      }
+    );
   }
 
   public uploadImage = async (id: string, file: any): Promise<boolean> => {

@@ -30,6 +30,13 @@ export default function LiveChat() {
 
   const chatBox = useRef<HTMLTextAreaElement>(null);
 
+  const chatBottom = useRef<HTMLDivElement>(null);
+
+  function scrollToBottom() {
+    console.log("scroll to bottom");
+    chatBottom.current?.scrollIntoView({ behavior: "smooth" });
+  }
+
   useEffect(() => {
     if (chatShown && mood) {
       Helpers.getById("live-chat-container")!.style.maxHeight = "100vh";
@@ -39,13 +46,15 @@ export default function LiveChat() {
   }, [chatShown, mood]);
 
   useEffect(() => {
-    async function getChats() {
-      setChatIsFetching(true);
-      let chats = await fireBaseHelper.getChats(mood ?? "");
-      setChats(chats);
-      setChatIsFetching(false);
+    setChatIsFetching(true);
+    if (mood !== undefined) {
+      let unsubscribe = fireBaseHelper.listenLivechat(mood!, (newChats) => {
+        newChats.sort((a, b) => a.dateSent.seconds - b.dateSent.seconds);
+        setChats(() => newChats);
+        setChatIsFetching(false);
+      });
+      return unsubscribe;
     }
-    getChats();
   }, [mood]);
 
   // TODO: add data to the users collection
@@ -64,6 +73,11 @@ export default function LiveChat() {
               <div className="no-messages">No messages yet</div>
             ) : (
               chats.map((chat, index) => {
+                if (index === chats.length - 1) {
+                  new Promise((resolve) => setTimeout(resolve, 700)).then(() =>
+                    scrollToBottom()
+                  ); //TODO: IMPROVE THIS
+                }
                 return (
                   <ChatBubble
                     key={index}
@@ -75,6 +89,7 @@ export default function LiveChat() {
                 );
               })
             )}
+            <div ref={chatBottom}></div>
           </div>
           {user !== null ? (
             <div className="chat-box-container">
@@ -98,7 +113,6 @@ export default function LiveChat() {
                   );
                   if (await fireBaseHelper.sendChat(chat, mood)) {
                     chatBox.current!.value = "";
-                    setChats((current) => [chat, ...current]);
                   } else {
                     AlertHelper.errorToast(
                       "Failed to send the Message, please try again"
