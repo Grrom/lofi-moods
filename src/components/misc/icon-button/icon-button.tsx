@@ -20,7 +20,7 @@ export function IconButton({
     <span
       className={`icon-button ${className}`}
       title={text}
-      onClick={(event) => onClick(event)}
+      onClick={(event) => !isLoading && onClick(event)}
     >
       {isLoading ? (
         <MiniLoader />

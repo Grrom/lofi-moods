@@ -1,4 +1,3 @@
-import Chat from "../../types/chat";
 import defaultProfile from "../../assets/default_profile.png";
 import Helpers from "../../helpers/helpers";
 import { useEffect, useState } from "react";
@@ -10,7 +9,7 @@ export default function ChatBubble({
   message,
   dateSent,
   isVerified,
-}: Chat) {
+}: any) {
   const [userImage, setUserImage] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
 

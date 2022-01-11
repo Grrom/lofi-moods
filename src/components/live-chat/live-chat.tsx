@@ -2,7 +2,7 @@ import { IconButton } from "../misc/icon-button/icon-button";
 import ChatBubble from "./chat-bubble";
 import "./live-chat.scss";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Helpers from "../../helpers/helpers";
 import { useChatShown } from "../../global-state/chat-provider";
 import { useMood } from "../../global-state/mood-provider";
@@ -14,6 +14,8 @@ import { useModalProfileUpdate } from "../../global-state/profile-modal-provider
 import { fireBaseHelper } from "../../App";
 import Chat from "../../types/chat";
 import { Loader } from "../misc/loader/loader";
+import { Timestamp } from "@firebase/firestore";
+import AlertHelper from "../../helpers/alert-helper";
 
 export default function LiveChat() {
   const chatShown = useChatShown();
@@ -23,7 +25,10 @@ export default function LiveChat() {
   const toggleProfileModal = useModalProfileUpdate();
 
   const [chatIsFetching, setChatIsFetching] = useState(false);
+  const [sendingChat, setSendingChat] = useState(false);
   const [chats, setChats] = useState<Array<Chat>>([]);
+
+  const chatBox = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (chatShown && mood) {
@@ -77,12 +82,30 @@ export default function LiveChat() {
                 className="chat-box"
                 placeholder="Type something..."
                 rows={1}
+                ref={chatBox}
               />
               <IconButton
                 icon={send}
-                isLoading={false}
+                isLoading={sendingChat}
                 className="send-button"
-                onClick={() => console.log("send")}
+                onClick={async () => {
+                  setSendingChat(true);
+                  let chat = new Chat(
+                    user.id,
+                    chatBox.current!.value,
+                    Timestamp.fromDate(new Date()),
+                    user.isVerified
+                  );
+                  if (await fireBaseHelper.sendChat(chat, mood)) {
+                    chatBox.current!.value = "";
+                    setChats((current) => [chat, ...current]);
+                  } else {
+                    AlertHelper.errorToast(
+                      "Failed to send the Message, please try again"
+                    );
+                  }
+                  setSendingChat(false);
+                }}
               />
             </div>
           ) : (

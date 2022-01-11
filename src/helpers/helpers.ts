@@ -1,3 +1,5 @@
+import { Timestamp } from "@firebase/firestore";
+
 export default class Helpers {
   static getById = (id: string) => {
     return document.getElementById(id);

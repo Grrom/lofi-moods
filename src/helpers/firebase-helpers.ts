@@ -1,4 +1,5 @@
 import {
+  addDoc,
   collection,
   doc,
   getDoc,
@@ -52,10 +53,6 @@ export default class FireBaseHelper {
     }
   };
 
-  public uploadImage = async (id: string, file: any): Promise<boolean> => {
-    return await this.uploadFile(id, file, "user_images", "png");
-  };
-
   public async getChats(mood: string) {
     const querySnapshot = await getDocs(
       collection(this.firestore, `${mood}_chatroom`)
@@ -64,16 +61,29 @@ export default class FireBaseHelper {
     querySnapshot.forEach((doc) => {
       let data = doc.data();
       datas.push(
-        new Chat(
-          data.senderId,
-          data.message,
-          data.dateSent,
-          data.senderVerified
-        )
+        new Chat(data.senderId, data.message, data.dateSent, data.isVerified)
       );
     });
     return datas;
   }
+
+  public async sendChat(chat: Chat, mood: string) {
+    try {
+      console.log(
+        await addDoc(
+          collection(this.firestore, `${mood}_chatroom`),
+          JSON.parse(JSON.stringify(chat))
+        )
+      );
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  public uploadImage = async (id: string, file: any): Promise<boolean> => {
+    return await this.uploadFile(id, file, "user_images", "png");
+  };
 
   private uploadFile = async (
     id: string,
