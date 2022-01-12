@@ -56,6 +56,22 @@ export default function LiveChat() {
     }
   }, [mood]);
 
+  async function sendChat() {
+    setSendingChat(true);
+    let chat = new Chat(
+      user!.id,
+      chatBox.current!.value,
+      Timestamp.fromDate(new Date()),
+      user!.isVerified
+    );
+    if (await fireBaseHelper.sendChat(chat, mood!)) {
+      chatBox.current!.value = "";
+    } else {
+      AlertHelper.errorToast("Failed to send the Message, please try again");
+    }
+    setSendingChat(false);
+  }
+
   // TODO: add data to the users collection
   // TODO: reduce the need to re-fetch these every time the messages tab is toggled
 
@@ -97,28 +113,13 @@ export default function LiveChat() {
                 placeholder="Type something..."
                 rows={1}
                 ref={chatBox}
+                onKeyUp={(event) => event.key === "Enter" && sendChat()}
               />
               <IconButton
                 icon={send}
                 isLoading={sendingChat}
                 className="send-button"
-                onClick={async () => {
-                  setSendingChat(true);
-                  let chat = new Chat(
-                    user.id,
-                    chatBox.current!.value,
-                    Timestamp.fromDate(new Date()),
-                    user.isVerified
-                  );
-                  if (await fireBaseHelper.sendChat(chat, mood)) {
-                    chatBox.current!.value = "";
-                  } else {
-                    AlertHelper.errorToast(
-                      "Failed to send the Message, please try again"
-                    );
-                  }
-                  setSendingChat(false);
-                }}
+                onClick={async () => sendChat()}
               />
             </div>
           ) : (

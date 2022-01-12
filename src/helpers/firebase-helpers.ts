@@ -76,7 +76,6 @@ export default class FireBaseHelper {
   }
 
   public async sendChat(chat: Chat, mood: string) {
-    console.log("send", mood);
     try {
       await addDoc(
         collection(this.firestore, `${mood}_chatroom`),
