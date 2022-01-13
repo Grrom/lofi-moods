@@ -74,6 +74,7 @@ export default function LiveChat() {
 
   // TODO: add data to the users collection
   // TODO: reduce the need to re-fetch these every time the messages tab is toggled
+  // TODO: disable typing while sending and preventDefault of enter key
 
   return (
     <div id="live-chat-container">

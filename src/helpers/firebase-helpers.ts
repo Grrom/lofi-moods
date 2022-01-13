@@ -9,10 +9,12 @@ import {
   onSnapshot,
   orderBy,
   query,
+  setDoc,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import Chat from "../types/chat";
 import Music from "../types/music";
+import LofiMoodsUser from "../types/user";
 
 export default class FireBaseHelper {
   firestore = getFirestore();
@@ -110,6 +112,12 @@ export default class FireBaseHelper {
   public uploadImage = async (id: string, file: any): Promise<boolean> => {
     return await this.uploadFile(id, file, "user_images", "png");
   };
+
+  public async saveUser(user: LofiMoodsUser) {
+    await setDoc(doc(this.firestore, "users", user.id), {
+      name: user.name,
+    });
+  }
 
   private uploadFile = async (
     id: string,

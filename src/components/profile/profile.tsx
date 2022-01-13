@@ -20,6 +20,7 @@ import logout from "../../assets/logout.svg";
 import editImage from "../../assets/edit_image.svg";
 import defaultProfile from "../../assets/default_profile.png";
 import edit from "../../assets/edit.svg";
+import LofiMoodsUser from "../../types/user";
 
 export default function Profile() {
   const [hasSentVerification, setHasSentVerification] = useState(false);
@@ -104,10 +105,21 @@ export default function Profile() {
                             AlertHelper.successToast("Display name updated!");
                             const unsubscribe =
                               authenticationHelper.auth.onAuthStateChanged(
-                                (user) => userUpdate(user)
+                                (user) => {
+                                  if (user !== null)
+                                    fireBaseHelper.saveUser(
+                                      new LofiMoodsUser(
+                                        user.displayName!,
+                                        user.email!,
+                                        user.uid,
+                                        user.emailVerified
+                                      )
+                                    );
+                                  userUpdate(user);
+                                  unsubscribe();
+                                }
                               );
                             authenticationHelper.triggerUpdate();
-                            unsubscribe();
                           } catch (e) {
                             AlertHelper.errorToast(Helpers.getFirebaseError(e));
                           }

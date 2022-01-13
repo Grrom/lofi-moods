@@ -1,5 +1,5 @@
 import { createRef, useState } from "react";
-import { authenticationHelper } from "../../App";
+import { authenticationHelper, fireBaseHelper } from "../../App";
 import { IconButton } from "../misc/icon-button/icon-button";
 import InputField from "../misc/input-field/input-field";
 import "./login-signup.scss";
@@ -7,6 +7,8 @@ import "./login-signup.scss";
 import login from "../../assets/login.svg";
 import Helpers from "../../helpers/helpers";
 import AlertHelper from "../../helpers/alert-helper";
+import { User } from "@firebase/auth";
+import LofiMoodsUser from "../../types/user";
 
 export default function LoginSignup() {
   const [isLogin, setIsLogin] = useState(true);
@@ -22,15 +24,34 @@ export default function LoginSignup() {
     if (!isSubmitting) {
       setIsSubmitting(true);
       try {
-        isLogin
-          ? await authenticationHelper.login(
-              emailRef.current!.value,
-              passwordRef.current!.value
-            )
-          : await authenticationHelper.signup(
-              emailRef.current!.value,
-              passwordRef.current!.value
-            );
+        if (isLogin) {
+          await authenticationHelper.login(
+            emailRef.current!.value,
+            passwordRef.current!.value
+          );
+        } else {
+          await authenticationHelper.signup(
+            emailRef.current!.value,
+            passwordRef.current!.value
+          );
+
+          const unsubscribe = authenticationHelper.auth.onAuthStateChanged(
+            (user: User | null) => {
+              console.log("signup LISTENER");
+              if (user !== null)
+                fireBaseHelper.saveUser(
+                  new LofiMoodsUser(
+                    user.displayName!,
+                    user.email!,
+                    user.uid,
+                    user.emailVerified
+                  )
+                );
+              unsubscribe();
+            }
+          );
+        }
+
         AlertHelper.successToast("Logged in successfully");
       } catch (e) {
         AlertHelper.errorToast(Helpers.getFirebaseError(e));
