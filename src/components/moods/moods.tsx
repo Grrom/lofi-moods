@@ -39,12 +39,11 @@ export default function Moods({ setBg }: _props) {
   const mood = useMood();
   const setMood = useMoodUpdate();
 
-  function playMusic(newMusic: Music) {
-    if (music?.link !== newMusic.link) {
-      setBottomMessage(`Fetching: ${newMusic.title}`);
-    }
+  function playMusic(newMusic: Music, mood: string) {
+    setMood(mood);
     setMusic(() => newMusic);
     setIsPlaying(() => true);
+    setBottomMessage(`Fetching: ${newMusic.title}`);
   }
   function checkAndSetBg(musicId?: string) {
     let image = new Image();
@@ -70,12 +69,11 @@ export default function Moods({ setBg }: _props) {
       ) : (
         moods.map((value) => (
           <Mood
-            onClick={() => setMood(value)}
             mood={value}
             playMusic={playMusic}
             key={value}
             isSelected={mood === value}
-          ></Mood>
+          />
         ))
       )}
       <ReactPlayer

@@ -22,11 +22,18 @@ export default class FireBaseHelper {
   storage = getStorage();
 
   public fetchMusic = async (mood: string): Promise<Array<Music>> => {
-    const querySnapshot = await getDocs(collection(this.firestore, mood));
+    const querySnapshot = await getDocs(
+      query(
+        collection(this.firestore, mood),
+        orderBy("dateAdded", "desc"),
+        limit(5)
+      )
+    );
+
     let datas: Array<Music> = [];
     querySnapshot.forEach((doc) => {
       let data = doc.data();
-      datas.push(new Music(data.artist, data.link, data.title, doc.id));
+      datas.push(new Music(data.owner, data.link, data.title, doc.id));
     });
     return datas;
   };
@@ -59,24 +66,6 @@ export default class FireBaseHelper {
       return "";
     }
   };
-
-  public async getLastChat(mood: string, count: number) {
-    const querySnapshot = await getDocs(
-      query(
-        collection(this.firestore, `${mood}_chatroom`),
-        orderBy("dateSent.seconds", "desc"),
-        limit(count)
-      )
-    );
-    let datas: Array<Chat> = [];
-    querySnapshot.forEach((doc) => {
-      let data = doc.data();
-      datas.push(
-        new Chat(data.senderId, data.message, data.dateSent, data.isVerified)
-      );
-    });
-    return datas;
-  }
 
   public async sendChat(chat: Chat, mood: string) {
     try {

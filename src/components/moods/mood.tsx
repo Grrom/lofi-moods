@@ -3,20 +3,19 @@ import Music from "../../types/music";
 
 interface _props {
   mood: string;
-  playMusic: (music: Music) => void;
+  playMusic: (music: Music, selected: string) => void;
   isSelected: boolean;
-  onClick: () => void;
 }
-export default function Mood({ mood, playMusic, isSelected, onClick }: _props) {
+export default function Mood({ mood, playMusic, isSelected }: _props) {
   return (
     <div
       className={`mood ${isSelected && "active"}`}
       onClick={async () => {
-        onClick();
-        let musicList: Array<Music> = await fireBaseHelper.fetchMusic(mood);
-        playMusic(
-          musicList[Math.floor(Math.random() * (musicList.length - 0))]
-        );
+        if (!isSelected) {
+          let musicList: Array<Music> = await fireBaseHelper.fetchMusic(mood);
+          console.log(musicList);
+          playMusic(musicList[0], mood);
+        }
       }}
     >
       {mood}
