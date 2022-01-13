@@ -36,11 +36,15 @@ export default function Profile() {
   useEffect(() => {
     async function getImage() {
       let image = await fireBaseHelper.getUserImage(user!.id);
-      setUserImage(image ?? defaultProfile);
+      setUserImage(image);
     }
-    if ((userImage === null || userImage === "refetch") && user !== null)
-      getImage();
+    if (user !== null) getImage();
   }, [user, userImage]);
+
+  function clearState() {
+    setHasSentVerification(false);
+    setUserImage(null);
+  }
 
   if (user === null) {
     return <LoginModal />;
@@ -77,7 +81,7 @@ export default function Profile() {
                     AlertHelper.showLoading("Uploading Image");
                     if (await fireBaseHelper.uploadImage(user.id, image)) {
                       AlertHelper.successToast("Image Successfully uploaded!");
-                      setUserImage("refetch");
+                      setUserImage(null);
                     } else {
                       AlertHelper.errorToast("Failed to upload image");
                     }
@@ -191,10 +195,10 @@ export default function Profile() {
           isLoading={false}
           text="Logout"
           className="logout"
-          onClick={(e) => {
-            e.preventDefault();
+          onClick={() => {
             try {
               signOut(authenticationHelper.auth);
+              clearState();
               AlertHelper.successToast("Logged out successfully");
             } catch (e) {
               AlertHelper.errorToast(Helpers.getFirebaseError(e));
