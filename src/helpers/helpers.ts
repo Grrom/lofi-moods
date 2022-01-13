@@ -14,9 +14,9 @@ export default class Helpers {
     );
   };
 
-  static toDateTime = (secs: number) => {
-    var t = new Date(1970, 0, 1);
-    t.setSeconds(secs);
+  static toDateTime = (utcSecs: number) => {
+    var t = new Date(0);
+    t.setUTCSeconds(utcSecs);
     return t;
   };
 }

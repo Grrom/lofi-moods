@@ -24,6 +24,31 @@ export default function ChatBubble({
     fetchPfp();
   }, [senderId]);
 
+  function formattedDate() {
+    let date = Helpers.toDateTime(dateSent.seconds);
+    let yesterday = new Date();
+    yesterday.setDate(new Date().getDate() - 1);
+
+    if (date.toDateString() === yesterday.toDateString()) {
+      return (
+        "yesterday " +
+        date.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        })
+      );
+    } else if (date.toDateString() === new Date().toDateString()) {
+      return date.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      });
+    } else {
+      return date.toDateString();
+    }
+  }
+
   return (
     <div className="chat-bubble">
       {userName !== null && userImage !== null ? (
@@ -35,10 +60,7 @@ export default function ChatBubble({
               {isVerified && <span title="Email verified"> &#10004;</span>}:
             </span>
             <span className="message">{message}</span>
-            <small className="date-sent">
-              {Helpers.toDateTime(dateSent.seconds).toDateString()}
-              {/* TODO: change the display when message was sent the same day */}
-            </small>
+            <small className="date-sent">{formattedDate()}</small>
           </div>
         </>
       ) : (

@@ -62,7 +62,7 @@ export default function LiveChat() {
       let chat = new Chat(
         user!.id,
         chatBox.current!.value,
-        Timestamp.fromDate(new Date()),
+        Timestamp.now(),
         user!.isVerified
       );
       if (await fireBaseHelper.sendChat(chat, mood!)) {
