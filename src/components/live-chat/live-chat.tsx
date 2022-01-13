@@ -74,7 +74,7 @@ export default function LiveChat() {
     }
   }
 
-  // TODO: reduce the need to re-fetch these every time the messages tab is toggled
+  // TODO: reduce the need to re-fetch these every time the messages tab is toggled, on second thought, this seems good as it is
 
   return (
     <div id="live-chat-container">
@@ -92,7 +92,7 @@ export default function LiveChat() {
                 if (index === chats.length - 1) {
                   new Promise((resolve) => setTimeout(resolve, 700)).then(() =>
                     scrollToBottom()
-                  ); //TODO: IMPROVE THIS
+                  ); //TODO: IMPROVE THIS, this seems to perform quite well, I'll keep it like this as long as it doesn't cause problems
                 }
                 return (
                   <ChatBubble
