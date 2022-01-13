@@ -89,6 +89,7 @@
         @extend .circular-border;
 
         .image {
+          object-fit: cover;
           height: 32px;
           width: 32px;
           margin-right: 8px;
