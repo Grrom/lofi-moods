@@ -77,7 +77,6 @@ export default function Profile() {
                   "Upload an image",
                   "image/*",
                   async (image) => {
-                    //TODO: shrink image first before uploading
                     AlertHelper.showLoading("Uploading Image");
                     if (await fireBaseHelper.uploadImage(user.id, image)) {
                       AlertHelper.successToast("Image Successfully uploaded!");

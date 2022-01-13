@@ -15,6 +15,7 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import Chat from "../types/chat";
 import Music from "../types/music";
 import LofiMoodsUser from "../types/user";
+import Helpers from "./helpers";
 
 export default class FireBaseHelper {
   firestore = getFirestore();
@@ -110,7 +111,14 @@ export default class FireBaseHelper {
   }
 
   public uploadImage = async (id: string, file: any): Promise<boolean> => {
-    return await this.uploadFile(id, file, "user_images", "png");
+    let shrunkFile;
+    try {
+      shrunkFile = await Helpers.resizeImage({ file: file, maxSize: 500 });
+    } catch (e) {
+      console.error(e);
+      shrunkFile = file;
+    }
+    return await this.uploadFile(id, shrunkFile, "user_images", "png");
   };
 
   public async saveUser(user: LofiMoodsUser) {
