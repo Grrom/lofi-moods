@@ -39,10 +39,12 @@ export default function Moods({ setBg }: _props) {
   const mood = useMood();
   const setMood = useMoodUpdate();
 
-  function playMusic(music: Music) {
-    setMusic(() => music);
+  function playMusic(newMusic: Music) {
+    if (music?.link !== newMusic.link) {
+      setBottomMessage(`Fetching: ${newMusic.title}`);
+    }
+    setMusic(() => newMusic);
     setIsPlaying(() => true);
-    setBottomMessage(`Fetching: ${music.title}`);
   }
   function checkAndSetBg(musicId?: string) {
     let image = new Image();
@@ -54,6 +56,11 @@ export default function Moods({ setBg }: _props) {
         setBg(`https://i.ytimg.com/vi/${musicId}/hqdefault.jpg`);
       }
     };
+  }
+
+  function onStartPlaying() {
+    setBottomMessage("Now Playing: " + music?.title);
+    checkAndSetBg(music?.link);
   }
 
   return (
@@ -73,10 +80,7 @@ export default function Moods({ setBg }: _props) {
       )}
       <ReactPlayer
         className="react-player"
-        onStart={() => {
-          setBottomMessage("Now Playing: " + music?.title);
-          checkAndSetBg(music?.link);
-        }}
+        onStart={() => onStartPlaying()}
         onError={() =>
           setBottomMessage("Something went wrong while fetching the music")
         }

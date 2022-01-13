@@ -57,24 +57,24 @@ export default function LiveChat() {
   }, [mood]);
 
   async function sendChat() {
-    setSendingChat(true);
-    let chat = new Chat(
-      user!.id,
-      chatBox.current!.value,
-      Timestamp.fromDate(new Date()),
-      user!.isVerified
-    );
-    if (await fireBaseHelper.sendChat(chat, mood!)) {
-      chatBox.current!.value = "";
-    } else {
-      AlertHelper.errorToast("Failed to send the Message, please try again");
+    if (chatBox.current!.value.length > 0) {
+      setSendingChat(true);
+      let chat = new Chat(
+        user!.id,
+        chatBox.current!.value,
+        Timestamp.fromDate(new Date()),
+        user!.isVerified
+      );
+      if (await fireBaseHelper.sendChat(chat, mood!)) {
+        chatBox.current!.value = "";
+      } else {
+        AlertHelper.errorToast("Failed to send the Message, please try again");
+      }
+      setSendingChat(false);
     }
-    setSendingChat(false);
   }
 
-  // TODO: add data to the users collection
   // TODO: reduce the need to re-fetch these every time the messages tab is toggled
-  // TODO: disable typing while sending and preventDefault of enter key
 
   return (
     <div id="live-chat-container">
@@ -114,7 +114,15 @@ export default function LiveChat() {
                 placeholder="Type something..."
                 rows={1}
                 ref={chatBox}
-                onKeyUp={(event) => event.key === "Enter" && sendChat()}
+                disabled={sendingChat}
+                onKeyDown={(event) =>
+                  !event.shiftKey &&
+                  event.key === "Enter" &&
+                  event.preventDefault()
+                }
+                onKeyUp={(event) =>
+                  !event.shiftKey && event.key === "Enter" && sendChat()
+                }
               />
               <IconButton
                 icon={send}

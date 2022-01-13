@@ -9,7 +9,6 @@ export default function BottomIndicator() {
   const isBuffering = useBuffering();
   const message = useBottomMessage();
   const [isMarquee, setIsMarquee] = useState(false);
-  //TODO fix issue where text gets stuck with fetching when the same song comes out after shuffling
 
   useLayoutEffect(() => {
     async function updateSize() {

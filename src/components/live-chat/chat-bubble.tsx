@@ -37,6 +37,7 @@ export default function ChatBubble({
             <span className="message">{message}</span>
             <small className="date-sent">
               {Helpers.toDateTime(dateSent.seconds).toDateString()}
+              {/* TODO: change the display when message was sent the same day */}
             </small>
           </div>
         </>
