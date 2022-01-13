@@ -18,7 +18,7 @@ export default function ChatBubble({
       let imageLink = await fireBaseHelper.getUserImage(senderId);
       let userName = await fireBaseHelper.getUserName(senderId);
       setUserName(() => userName);
-      setUserImage(() => imageLink);
+      setUserImage(() => imageLink ?? defaultProfile);
     }
 
     fetchPfp();

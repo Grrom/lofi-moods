@@ -36,7 +36,7 @@ export default function Profile() {
   useEffect(() => {
     async function getImage() {
       let image = await fireBaseHelper.getUserImage(user!.id);
-      setUserImage(image);
+      setUserImage(image ?? defaultProfile);
     }
     if ((userImage === null || userImage === "refetch") && user !== null)
       getImage();

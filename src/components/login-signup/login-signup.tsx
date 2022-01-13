@@ -37,7 +37,6 @@ export default function LoginSignup() {
 
           const unsubscribe = authenticationHelper.auth.onAuthStateChanged(
             (user: User | null) => {
-              console.log("signup LISTENER");
               if (user !== null)
                 fireBaseHelper.saveUser(
                   new LofiMoodsUser(
