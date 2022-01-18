@@ -51,30 +51,38 @@ export default function LiveChat() {
     async function getLastChat() {
       setChatIsFetching(true);
       let lastChat = await fireBaseHelper.getLastChat(mood!);
+      lastChat.sort((a, b) => a.dateSent.seconds - b.dateSent.seconds);
+      lastChat.pop();
       setChats(() => lastChat);
       setChatIsFetching(false);
     }
-    if (mood !== null) getLastChat();
+
+    getLastChat();
   }, [mood]);
 
   useEffect(() => {
-    if (mood !== undefined) {
-      setChatIsFetching(true);
+    async function listen() {
       let unsubscribe = fireBaseHelper.listenLivechat(mood!, (newChats) => {
         newChats.sort((a, b) => a.dateSent.seconds - b.dateSent.seconds);
         setChats((current) => [...current, newChats[newChats.length - 1]]);
         setChatIsFetching(false);
-        new Promise((resolve) => setTimeout(resolve, 700)).then(() =>
-          scrollToBottom()
-        );
       });
       return unsubscribe;
     }
+    if (mood !== undefined) listen();
   }, [mood]);
 
   useLayoutEffect(() => {
     scrollToBottom();
   }, [chats, chatIsFetching]);
+
+  useLayoutEffect(() => {
+    if (chatShown) {
+      new Promise((resolve) => setTimeout(resolve, 700)).then(() =>
+        scrollToBottom()
+      );
+    }
+  }, [chatShown, mood]);
 
   async function sendChat() {
     if (chatBox.current!.value.length > 0) {
@@ -91,6 +99,7 @@ export default function LiveChat() {
         AlertHelper.errorToast("Failed to send the Message, please try again");
       }
       setSendingChat(false);
+      chatBox.current?.focus();
     }
   }
 
@@ -146,9 +155,9 @@ export default function LiveChat() {
                   event.key === "Enter" &&
                   event.preventDefault()
                 }
-                onKeyUp={(event) =>
-                  !event.shiftKey && event.key === "Enter" && sendChat()
-                }
+                onKeyUp={(event) => {
+                  !event.shiftKey && event.key === "Enter" && sendChat();
+                }}
               />
               <IconButton
                 icon={send}

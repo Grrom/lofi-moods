@@ -94,7 +94,6 @@ export default class FireBaseHelper {
         new Chat(data.senderId, data.message, data.dateSent, data.isVerified)
       );
     });
-    datas.pop();
     return datas;
   }
 
@@ -103,7 +102,7 @@ export default class FireBaseHelper {
       query(
         collection(this.firestore, `${mood}_chatroom`),
         orderBy("dateSent.seconds", "desc"),
-        limit(24)
+        limit(20)
       ),
       (data) => {
         let datas: Array<Chat> = [];
