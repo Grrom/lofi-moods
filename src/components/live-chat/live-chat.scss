@@ -99,8 +99,16 @@
         .message-block {
           .sender-name {
             font-weight: bold;
-
+            display: inline-flex;
             padding-right: 8px;
+
+            .user-name {
+              padding-right: 4px;
+            }
+          }
+
+          .message {
+            word-break: break-word;
           }
 
           .date-sent {

@@ -67,7 +67,7 @@ export default function ChatBubble({
           <img src={userImage ?? defaultProfile} alt="pfp" className="image" />
           <div className="message-block">
             <span className="sender-name">
-              {userName ?? "anonymous"}
+              <span className="user-name">{userName ?? "anonymous"}</span>
               {isVerified && <span title="Email verified"> &#10004;</span>}:
             </span>
             <span className="message">{message}</span>
