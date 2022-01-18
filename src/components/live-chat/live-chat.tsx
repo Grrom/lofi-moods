@@ -2,7 +2,7 @@ import { IconButton } from "../misc/icon-button/icon-button";
 import ChatBubble from "./chat-bubble";
 import "./live-chat.scss";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Helpers from "../../helpers/helpers";
 import { useChatShown } from "../../global-state/chat-provider";
 import { useMood } from "../../global-state/mood-provider";
@@ -27,6 +27,9 @@ export default function LiveChat() {
   const [chatIsFetching, setChatIsFetching] = useState(false);
   const [sendingChat, setSendingChat] = useState(false);
   const [chats, setChats] = useState<Array<Chat>>([]);
+  const [chatParticipants, setChatParticipants] = useState<{
+    [key: string]: string | undefined;
+  }>({});
 
   const chatBox = useRef<HTMLTextAreaElement>(null);
 
@@ -45,16 +48,33 @@ export default function LiveChat() {
   }, [chatShown, mood]);
 
   useEffect(() => {
+    async function getLastChat() {
+      setChatIsFetching(true);
+      let lastChat = await fireBaseHelper.getLastChat(mood!);
+      setChats(() => lastChat);
+      setChatIsFetching(false);
+    }
+    if (mood !== null) getLastChat();
+  }, [mood]);
+
+  useEffect(() => {
     if (mood !== undefined) {
       setChatIsFetching(true);
       let unsubscribe = fireBaseHelper.listenLivechat(mood!, (newChats) => {
         newChats.sort((a, b) => a.dateSent.seconds - b.dateSent.seconds);
-        setChats(() => newChats);
+        setChats((current) => [...current, newChats[newChats.length - 1]]);
         setChatIsFetching(false);
+        new Promise((resolve) => setTimeout(resolve, 700)).then(() =>
+          scrollToBottom()
+        );
       });
       return unsubscribe;
     }
   }, [mood]);
+
+  useLayoutEffect(() => {
+    scrollToBottom();
+  }, [chats, chatIsFetching]);
 
   async function sendChat() {
     if (chatBox.current!.value.length > 0) {
@@ -74,6 +94,15 @@ export default function LiveChat() {
     }
   }
 
+  function addUserName(userName: string, id: string) {
+    setChatParticipants((current) => {
+      current[id] = userName;
+      return current;
+    });
+  }
+
+  const checkUsername = (id: string) => chatParticipants[id] ?? null;
+
   // TODO: reduce the need to re-fetch these every time the messages tab is toggled, on second thought, this seems good as it is
 
   return (
@@ -89,11 +118,6 @@ export default function LiveChat() {
               <div className="no-messages">No messages yet</div>
             ) : (
               chats.map((chat, index) => {
-                if (index === chats.length - 1) {
-                  new Promise((resolve) => setTimeout(resolve, 700)).then(() =>
-                    scrollToBottom()
-                  ); //TODO: IMPROVE THIS, this seems to perform quite well, I'll keep it like this as long as it doesn't cause problems
-                }
                 return (
                   <ChatBubble
                     key={index}
@@ -101,6 +125,8 @@ export default function LiveChat() {
                     message={chat.message}
                     dateSent={chat.dateSent}
                     isVerified={chat.isVerified}
+                    addUserName={addUserName}
+                    checkUsername={checkUsername}
                   />
                 );
               })

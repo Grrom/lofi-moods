@@ -9,6 +9,8 @@ export default function ChatBubble({
   message,
   dateSent,
   isVerified,
+  addUserName,
+  checkUsername,
 }: any) {
   const [userImage, setUserImage] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
@@ -16,13 +18,22 @@ export default function ChatBubble({
   useEffect(() => {
     async function fetchPfp() {
       let imageLink = await fireBaseHelper.getUserImage(senderId);
-      let userName = await fireBaseHelper.getUserName(senderId);
-      setUserName(() => userName);
       setUserImage(() => imageLink ?? defaultProfile);
     }
 
+    async function fetchName() {
+      let userName = checkUsername(senderId);
+      if (userName == null) {
+        addUserName(senderId, senderId);
+        userName = await fireBaseHelper.getUserName(senderId);
+        addUserName(userName, senderId);
+      }
+      setUserName(() => userName);
+    }
+
+    fetchName();
     fetchPfp();
-  }, [senderId]);
+  }, [senderId, addUserName, checkUsername]);
 
   function formattedDate() {
     let date = Helpers.toDateTime(dateSent.seconds);
@@ -51,7 +62,7 @@ export default function ChatBubble({
 
   return (
     <div className="chat-bubble">
-      {userName !== null && userImage !== null ? (
+      {userName !== null && userName !== senderId ? (
         <>
           <img src={userImage ?? defaultProfile} alt="pfp" className="image" />
           <div className="message-block">

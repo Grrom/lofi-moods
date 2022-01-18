@@ -79,6 +79,25 @@ export default class FireBaseHelper {
     }
   }
 
+  public async getLastChat(mood: string) {
+    const querySnapshot = await getDocs(
+      query(
+        collection(this.firestore, `${mood}_chatroom`),
+        orderBy("dateSent.seconds", "desc"),
+        limit(20)
+      )
+    );
+    let datas: Array<Chat> = [];
+    querySnapshot.forEach((doc) => {
+      let data = doc.data();
+      datas.push(
+        new Chat(data.senderId, data.message, data.dateSent, data.isVerified)
+      );
+    });
+    datas.pop();
+    return datas;
+  }
+
   public listenLivechat(mood: string, callback: (data: Array<Chat>) => any) {
     return onSnapshot(
       query(
