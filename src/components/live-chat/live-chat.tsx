@@ -61,15 +61,15 @@ export default function LiveChat() {
   }, [mood]);
 
   useEffect(() => {
-    async function listen() {
-      let unsubscribe = fireBaseHelper.listenLivechat(mood!, (newChats) => {
+    let unsubscribe;
+    if (mood !== undefined) {
+      unsubscribe = fireBaseHelper.listenLivechat(mood!, (newChats) => {
         newChats.sort((a, b) => a.dateSent.seconds - b.dateSent.seconds);
         setChats((current) => [...current, newChats[newChats.length - 1]]);
         setChatIsFetching(false);
       });
-      return unsubscribe;
     }
-    if (mood !== undefined) listen();
+    return unsubscribe;
   }, [mood]);
 
   useLayoutEffect(() => {
