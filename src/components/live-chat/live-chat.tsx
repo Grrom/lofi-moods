@@ -65,7 +65,9 @@ export default function LiveChat() {
     if (mood !== undefined) {
       unsubscribe = fireBaseHelper.listenLivechat(mood!, (newChats) => {
         newChats.sort((a, b) => a.dateSent.seconds - b.dateSent.seconds);
-        setChats((current) => [...current, newChats[newChats.length - 1]]);
+        if (newChats[newChats.length - 1] !== undefined) {
+          setChats((current) => [...current, newChats[newChats.length - 1]]);
+        }
         setChatIsFetching(false);
       });
     }
