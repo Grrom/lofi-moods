@@ -1,4 +1,5 @@
 import { fireBaseHelper } from "../../App";
+import AlertHelper from "../../helpers/alert-helper";
 import Music from "../../types/music";
 
 interface _props {
@@ -14,7 +15,13 @@ export default function Mood({ mood, playMusic, isSelected }: _props) {
         if (!isSelected) {
           let musicList: Array<Music> = await fireBaseHelper.fetchMusic(mood);
           console.log(musicList);
-          playMusic(musicList[0], mood);
+          if (musicList.length === 0) {
+            AlertHelper.errorToast(
+              "Sorry there are no music in this mood right now, please choose a different mood."
+            );
+          } else {
+            playMusic(musicList[0], mood);
+          }
         }
       }}
     >
