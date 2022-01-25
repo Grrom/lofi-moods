@@ -2,6 +2,7 @@ import { User } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { authenticationHelper } from "../App";
+import Badge from "../types/badge";
 import { providerProps } from "../types/interfaces";
 import LofiMoodsUser from "../types/user";
 

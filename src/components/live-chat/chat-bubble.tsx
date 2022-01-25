@@ -3,6 +3,8 @@ import Helpers from "../../helpers/helpers";
 import { useEffect, useState } from "react";
 import { fireBaseHelper } from "../../App";
 import { MiniLoader } from "../misc/loader/loader";
+import Badge from "../../types/badge";
+import ChatSender from "../../types/chat_sender";
 
 export default function ChatBubble({
   senderId,
@@ -13,7 +15,11 @@ export default function ChatBubble({
   checkUsername,
 }: any) {
   const [userImage, setUserImage] = useState<string | null>(null);
-  const [userName, setUserName] = useState<string | null>(null);
+  const [badges, setBadges] = useState<Array<Badge>>([]);
+
+  const [chatSender, setChatSender] = useState(
+    new ChatSender(null, null, isVerified, [])
+  );
 
   useEffect(() => {
     async function fetchPfp() {
@@ -22,14 +28,23 @@ export default function ChatBubble({
     }
 
     async function fetchName() {
+      console.log("fetch name");
       let userName = checkUsername(senderId);
       if (userName == null) {
         addUserName(senderId, senderId);
         userName = await fireBaseHelper.getUserName(senderId);
+        console.log(userName);
         addUserName(userName, senderId);
       }
-      setUserName(() => userName);
+      // setUserName(() => userName);
+
+      setChatSender((current) => {
+        current.name = userName;
+        return current;
+      });
     }
+
+    async function fetchBadges() {}
 
     fetchName();
     fetchPfp();
@@ -62,12 +77,14 @@ export default function ChatBubble({
 
   return (
     <div className="chat-bubble">
-      {userName !== null && userName !== senderId ? (
+      {chatSender.name !== null && chatSender.name !== senderId ? (
         <>
           <img src={userImage ?? defaultProfile} alt="pfp" className="image" />
           <div className="message-block">
             <span className="sender-name">
-              <span className="user-name">{userName ?? "anonymous"}</span>
+              <span className="user-name">
+                {chatSender.name ?? "anonymous"}
+              </span>
               {isVerified && <span title="Email verified"> &#10004;</span>}:
             </span>
             <span className="message">{message}</span>

@@ -134,6 +134,12 @@ export default class FireBaseHelper {
     });
   }
 
+  public async addBadge(user: LofiMoodsUser) {
+    await setDoc(doc(this.firestore, "users", user.id), {
+      name: user.name,
+    });
+  }
+
   private uploadFile = async (
     id: string,
     file: any,
