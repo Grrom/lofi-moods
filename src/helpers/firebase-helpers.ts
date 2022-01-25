@@ -61,9 +61,9 @@ export default class FireBaseHelper {
 
   public getSenderData = async (userId: string): Promise<ChatSender | null> => {
     try {
-      console.log("Fetch sender data");
       let user = await getDoc(doc(collection(this.firestore, "users"), userId));
-      return user.data() as ChatSender;
+      let data = user.data();
+      return new ChatSender(data?.name, data?.badges);
     } catch (e) {
       return null;
     }
@@ -131,12 +131,6 @@ export default class FireBaseHelper {
   };
 
   public async saveUser(user: LofiMoodsUser) {
-    await setDoc(doc(this.firestore, "users", user.id), {
-      name: user.name,
-    });
-  }
-
-  public async addBadge(user: LofiMoodsUser) {
     await setDoc(doc(this.firestore, "users", user.id), {
       name: user.name,
     });

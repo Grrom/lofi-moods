@@ -5,6 +5,7 @@ import { fireBaseHelper } from "../../App";
 import { MiniLoader } from "../misc/loader/loader";
 import ChatSender from "../../types/chat_sender";
 import { Timestamp } from "@firebase/firestore";
+import UserBadge from "../misc/badge/badge";
 
 interface _props {
   senderId: string;
@@ -24,7 +25,6 @@ export default function ChatBubble({
   checkSenderData,
 }: _props) {
   const [userImage, setUserImage] = useState<string | null>(null);
-
   const [chatSender, setChatSender] = useState(new ChatSender(null, []));
 
   useEffect(() => {
@@ -84,9 +84,16 @@ export default function ChatBubble({
         <>
           <img src={userImage ?? defaultProfile} alt="pfp" className="image" />
           <div className="message-block">
-            <span className="sender-name">
+            <span
+              className={`sender-name ${
+                (chatSender.badges?.length ?? 0) > 0 ? "has-badge" : ""
+              }`}
+            >
               <span className="user-name">
-                {chatSender.name ?? "anonymous"}
+                <span>{chatSender.name ?? "anonymous"}</span>
+                {chatSender.badges?.map((badge) => {
+                  return <UserBadge badge={badge} />;
+                })}
               </span>
               {isVerified && <span title="Email verified"> &#10004;</span>}:
             </span>
