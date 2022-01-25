@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import Chat from "../types/chat";
+import ChatSender from "../types/chat_sender";
 import Music from "../types/music";
 import LofiMoodsUser from "../types/user";
 import Helpers from "./helpers";
@@ -58,12 +59,13 @@ export default class FireBaseHelper {
     }
   };
 
-  public getUserName = async (userId: string): Promise<string | null> => {
+  public getSenderData = async (userId: string): Promise<ChatSender | null> => {
     try {
+      console.log("Fetch sender data");
       let user = await getDoc(doc(collection(this.firestore, "users"), userId));
-      return user.data()?.name;
+      return user.data() as ChatSender;
     } catch (e) {
-      return "";
+      return null;
     }
   };
 

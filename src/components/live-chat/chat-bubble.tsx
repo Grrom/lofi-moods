@@ -3,23 +3,29 @@ import Helpers from "../../helpers/helpers";
 import { useEffect, useState } from "react";
 import { fireBaseHelper } from "../../App";
 import { MiniLoader } from "../misc/loader/loader";
-import Badge from "../../types/badge";
 import ChatSender from "../../types/chat_sender";
+import { Timestamp } from "@firebase/firestore";
+
+interface _props {
+  senderId: string;
+  message: string;
+  dateSent: Timestamp;
+  isVerified: boolean;
+  addSenderData: (senderData: ChatSender, id: string) => void;
+  checkSenderData: (id: string) => ChatSender | null;
+}
 
 export default function ChatBubble({
   senderId,
   message,
   dateSent,
   isVerified,
-  addUserName,
-  checkUsername,
-}: any) {
+  addSenderData,
+  checkSenderData,
+}: _props) {
   const [userImage, setUserImage] = useState<string | null>(null);
-  const [badges, setBadges] = useState<Array<Badge>>([]);
 
-  const [chatSender, setChatSender] = useState(
-    new ChatSender(null, null, isVerified, [])
-  );
+  const [chatSender, setChatSender] = useState(new ChatSender(null, []));
 
   useEffect(() => {
     async function fetchPfp() {
@@ -27,28 +33,25 @@ export default function ChatBubble({
       setUserImage(() => imageLink ?? defaultProfile);
     }
 
-    async function fetchName() {
-      console.log("fetch name");
-      let userName = checkUsername(senderId);
-      if (userName == null) {
-        addUserName(senderId, senderId);
-        userName = await fireBaseHelper.getUserName(senderId);
-        console.log(userName);
-        addUserName(userName, senderId);
+    async function fetchSender() {
+      let senderData = checkSenderData(senderId);
+      if (senderData == null) {
+        senderData = await fireBaseHelper.getSenderData(senderId);
       }
-      // setUserName(() => userName);
 
-      setChatSender((current) => {
-        current.name = userName;
-        return current;
-      });
+      if (senderData !== null) {
+        addSenderData(senderData, senderId);
+        setChatSender((current) => {
+          current.name = senderData!.name;
+          current.badges = senderData?.badges;
+          return current;
+        });
+      }
     }
 
-    async function fetchBadges() {}
-
-    fetchName();
+    fetchSender();
     fetchPfp();
-  }, [senderId, addUserName, checkUsername]);
+  }, [senderId, addSenderData, checkSenderData]);
 
   function formattedDate() {
     let date = Helpers.toDateTime(dateSent.seconds);
