@@ -98,8 +98,8 @@ export default function ChatBubble({
                 {senderBadges?.map((badge, index) => {
                   return <UserBadge key={`${index} ${badge}`} badge={badge} />;
                 })}
+                {isVerified && <span title="Email verified"> &#10004;</span>} :
               </span>
-              {isVerified && <span title="Email verified"> &#10004;</span>}:
             </span>
             <span className="message">{message}</span>
             <small className="date-sent">{formattedDate()}</small>
