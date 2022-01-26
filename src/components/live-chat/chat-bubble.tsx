@@ -3,17 +3,29 @@ import Helpers from "../../helpers/helpers";
 import { useEffect, useState } from "react";
 import { fireBaseHelper } from "../../App";
 import { MiniLoader } from "../misc/loader/loader";
+import ChatSender from "../../types/chat_sender";
+import { Timestamp } from "@firebase/firestore";
+import UserBadge from "../misc/badge/badge";
+
+interface _props {
+  senderId: string;
+  message: string;
+  dateSent: Timestamp;
+  isVerified: boolean;
+  addSenderData: (senderData: ChatSender, id: string) => void;
+  checkSenderData: (id: string) => ChatSender | null;
+}
 
 export default function ChatBubble({
   senderId,
   message,
   dateSent,
   isVerified,
-  addUserName,
-  checkUsername,
-}: any) {
+  addSenderData,
+  checkSenderData,
+}: _props) {
   const [userImage, setUserImage] = useState<string | null>(null);
-  const [userName, setUserName] = useState<string | null>(null);
+  const [chatSender, setChatSender] = useState(new ChatSender(null, []));
 
   useEffect(() => {
     async function fetchPfp() {
@@ -21,19 +33,25 @@ export default function ChatBubble({
       setUserImage(() => imageLink ?? defaultProfile);
     }
 
-    async function fetchName() {
-      let userName = checkUsername(senderId);
-      if (userName == null) {
-        addUserName(senderId, senderId);
-        userName = await fireBaseHelper.getUserName(senderId);
-        addUserName(userName, senderId);
+    async function fetchSender() {
+      let senderData = checkSenderData(senderId);
+      if (senderData == null) {
+        senderData = await fireBaseHelper.getSenderData(senderId);
       }
-      setUserName(() => userName);
+
+      if (senderData !== null) {
+        addSenderData(senderData, senderId);
+        setChatSender((current) => {
+          current.name = senderData!.name;
+          current.badges = senderData?.badges;
+          return current;
+        });
+      }
     }
 
-    fetchName();
+    fetchSender();
     fetchPfp();
-  }, [senderId, addUserName, checkUsername]);
+  }, [senderId, addSenderData, checkSenderData]);
 
   function formattedDate() {
     let date = Helpers.toDateTime(dateSent.seconds);
@@ -62,12 +80,21 @@ export default function ChatBubble({
 
   return (
     <div className="chat-bubble">
-      {userName !== null && userName !== senderId ? (
+      {chatSender.name !== null && chatSender.name !== senderId ? (
         <>
           <img src={userImage ?? defaultProfile} alt="pfp" className="image" />
           <div className="message-block">
-            <span className="sender-name">
-              <span className="user-name">{userName ?? "anonymous"}</span>
+            <span
+              className={`sender-name ${
+                (chatSender.badges?.length ?? 0) > 0 ? "has-badge" : ""
+              }`}
+            >
+              <span className="user-name">
+                <span>{chatSender.name ?? "anonymous"}</span>
+                {chatSender.badges?.map((badge) => {
+                  return <UserBadge badge={badge} />;
+                })}
+              </span>
               {isVerified && <span title="Email verified"> &#10004;</span>}:
             </span>
             <span className="message">{message}</span>

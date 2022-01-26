@@ -97,10 +97,16 @@
         }
 
         .message-block {
+          .has-badge {
+            background-color: $secondary;
+
+            @extend .rounded-border;
+          }
+
           .sender-name {
             font-weight: bold;
             display: inline-flex;
-            padding-right: 8px;
+            padding: 4px;
 
             .user-name {
               padding-right: 4px;

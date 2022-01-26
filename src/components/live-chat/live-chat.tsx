@@ -16,6 +16,7 @@ import Chat from "../../types/chat";
 import { Loader } from "../misc/loader/loader";
 import { Timestamp } from "@firebase/firestore";
 import AlertHelper from "../../helpers/alert-helper";
+import ChatSender from "../../types/chat_sender";
 
 export default function LiveChat() {
   const chatShown = useChatShown();
@@ -28,7 +29,7 @@ export default function LiveChat() {
   const [sendingChat, setSendingChat] = useState(false);
   const [chats, setChats] = useState<Array<Chat>>([]);
   const [chatParticipants, setChatParticipants] = useState<{
-    [key: string]: string | undefined;
+    [key: string]: ChatSender | undefined;
   }>({});
 
   const chatBox = useRef<HTMLTextAreaElement>(null);
@@ -105,14 +106,14 @@ export default function LiveChat() {
     }
   }
 
-  function addUserName(userName: string, id: string) {
+  function addSenderData(senderData: ChatSender, id: string) {
     setChatParticipants((current) => {
-      current[id] = userName;
+      current[id] = senderData;
       return current;
     });
   }
 
-  const checkUsername = (id: string) => chatParticipants[id] ?? null;
+  const checkSenderData = (id: string) => chatParticipants[id] ?? null;
 
   // TODO: reduce the need to re-fetch these every time the messages tab is toggled, on second thought, this seems good as it is
 
@@ -136,8 +137,8 @@ export default function LiveChat() {
                     message={chat.message}
                     dateSent={chat.dateSent}
                     isVerified={chat.isVerified}
-                    addUserName={addUserName}
-                    checkUsername={checkUsername}
+                    addSenderData={addSenderData}
+                    checkSenderData={checkSenderData}
                   />
                 );
               })
