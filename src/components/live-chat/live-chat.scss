@@ -106,14 +106,17 @@
           .sender-name {
             font-weight: bold;
             display: inline-flex;
-            padding: 4px;
+            padding: 0 4px;
 
             .user-name {
-              padding-right: 4px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
             }
           }
 
           .message {
+            padding-left: 4px;
             word-break: break-word;
           }
 

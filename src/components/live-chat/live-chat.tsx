@@ -132,7 +132,7 @@ export default function LiveChat() {
               chats.map((chat, index) => {
                 return (
                   <ChatBubble
-                    key={index}
+                    key={`${index} ${chat.dateSent} ${chat.message}`}
                     senderId={chat.senderId}
                     message={chat.message}
                     dateSent={chat.dateSent}

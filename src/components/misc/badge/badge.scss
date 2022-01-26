@@ -1,0 +1,8 @@
+@import "../../../styles/presets";
+
+.badge {
+  height: 12px;
+  width: 12px;
+
+  @extend .icon;
+}

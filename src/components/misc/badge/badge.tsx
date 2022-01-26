@@ -1,9 +1,14 @@
-import Badge from "../../../types/badge";
+import premium from "../../../assets/premium.svg";
+import "./badge.scss";
 
 interface _props {
-  badge: Badge;
+  badge: string;
 }
 
 export default function UserBadge({ badge }: _props) {
-  return <div className="user-badge">{badge.name}</div>;
+  function getIcon() {
+    return premium;
+  }
+
+  return <img src={getIcon()} alt={badge} title={badge} className="badge" />;
 }

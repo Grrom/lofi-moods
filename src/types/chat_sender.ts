@@ -1,11 +1,10 @@
-import Badge from "./badge";
 import { nullableString } from "./types";
 
 export default class ChatSender {
   name: nullableString;
-  badges?: Array<Badge>;
+  badges?: Array<string>;
 
-  constructor(name: nullableString, badges?: Array<Badge>) {
+  constructor(name: nullableString, badges?: Array<string>) {
     this.name = name;
     this.badges = badges;
   }

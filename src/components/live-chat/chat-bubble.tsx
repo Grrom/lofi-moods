@@ -6,6 +6,7 @@ import { MiniLoader } from "../misc/loader/loader";
 import ChatSender from "../../types/chat_sender";
 import { Timestamp } from "@firebase/firestore";
 import UserBadge from "../misc/badge/badge";
+import { nullableString } from "../../types/types";
 
 interface _props {
   senderId: string;
@@ -25,7 +26,8 @@ export default function ChatBubble({
   checkSenderData,
 }: _props) {
   const [userImage, setUserImage] = useState<string | null>(null);
-  const [chatSender, setChatSender] = useState(new ChatSender(null, []));
+  const [senderName, setSenderName] = useState<nullableString>();
+  const [senderBadges, setSenderBadges] = useState<Array<string>>();
 
   useEffect(() => {
     async function fetchPfp() {
@@ -37,15 +39,17 @@ export default function ChatBubble({
       let senderData = checkSenderData(senderId);
       if (senderData == null) {
         senderData = await fireBaseHelper.getSenderData(senderId);
-      }
-
-      if (senderData !== null) {
-        addSenderData(senderData, senderId);
-        setChatSender((current) => {
-          current.name = senderData!.name;
-          current.badges = senderData?.badges;
-          return current;
-        });
+        if (senderData !== null) {
+          addSenderData(senderData, senderId);
+          setSenderName(senderData.name);
+          setSenderBadges(senderData.badges);
+        }
+      } else {
+        if (senderData !== null) {
+          addSenderData(senderData, senderId);
+          setSenderName(senderData.name);
+          setSenderBadges(senderData.badges);
+        }
       }
     }
 
@@ -80,19 +84,19 @@ export default function ChatBubble({
 
   return (
     <div className="chat-bubble">
-      {chatSender.name !== null && chatSender.name !== senderId ? (
+      {senderName !== null ? (
         <>
           <img src={userImage ?? defaultProfile} alt="pfp" className="image" />
           <div className="message-block">
             <span
               className={`sender-name ${
-                (chatSender.badges?.length ?? 0) > 0 ? "has-badge" : ""
+                (senderBadges?.length ?? 0) > 0 ? "has-badge" : ""
               }`}
             >
               <span className="user-name">
-                <span>{chatSender.name ?? "anonymous"}</span>
-                {chatSender.badges?.map((badge) => {
-                  return <UserBadge badge={badge} />;
+                <span>{senderName ?? "anonymous"}</span>
+                {senderBadges?.map((badge, index) => {
+                  return <UserBadge key={`${index} ${badge}`} badge={badge} />;
                 })}
               </span>
               {isVerified && <span title="Email verified"> &#10004;</span>}:
