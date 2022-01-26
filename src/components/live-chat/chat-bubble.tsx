@@ -98,7 +98,12 @@ export default function ChatBubble({
                 {senderBadges?.map((badge, index) => {
                   return <UserBadge key={`${index} ${badge}`} badge={badge} />;
                 })}
-                {isVerified && <span title="Email verified"> &#10004;</span>} :
+                {isVerified && (
+                  <span className="verified-icon" title="Email verified">
+                    &#10004;
+                  </span>
+                )}
+                :
               </span>
             </span>
             <span className="message">{message}</span>
