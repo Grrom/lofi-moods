@@ -155,15 +155,14 @@
 
           flex-wrap: wrap;
           background-color: $primary;
-          padding: 8px 16px;
-          margin: 8px 0;
+          padding: 4px 8px;
 
           @extend .box-shadow;
           @extend .circular-border;
 
           .badge {
-            width: 28px;
-            height: 28px;
+            width: 20px;
+            height: 20px;
           }
         }
       }

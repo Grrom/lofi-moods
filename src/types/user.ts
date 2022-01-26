@@ -1,18 +1,16 @@
-import Badge from "./badge";
-
 export default class LofiMoodsUser {
   name: string;
   email: string;
   id: string;
   isVerified: boolean;
-  badges?: Array<Badge>;
+  badges?: Array<string>;
 
   constructor(
     name: string,
     email: string,
     id: string,
     isVerified: boolean,
-    badges?: Array<Badge>
+    badges?: Array<string>
   ) {
     this.name = name !== null ? name : email.substr(0, email.indexOf("@"));
     this.email = email;

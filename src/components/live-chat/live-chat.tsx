@@ -153,11 +153,21 @@ export default function LiveChat() {
                 rows={1}
                 ref={chatBox}
                 disabled={sendingChat}
-                onKeyDown={(event) =>
+                onKeyDown={(event) => {
                   !event.shiftKey &&
-                  event.key === "Enter" &&
-                  event.preventDefault()
-                }
+                    event.key === "Enter" &&
+                    event.preventDefault();
+                  if (
+                    !user.badges?.includes("premium") &&
+                    event.key !== "Backspace" &&
+                    chatBox.current!.value.length >= 20
+                  ) {
+                    AlertHelper.errorToast(
+                      "Non-premium users can only type up to 20 characters in the chat"
+                    );
+                    event.preventDefault();
+                  }
+                }}
                 onKeyUp={(event) => {
                   !event.shiftKey && event.key === "Enter" && sendChat();
                 }}

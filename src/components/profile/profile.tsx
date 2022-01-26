@@ -11,7 +11,6 @@ import LoginSignup from "../login-signup/login-signup";
 
 import "./profile.scss";
 import { IconButton } from "../misc/icon-button/icon-button";
-import Badge from "../../types/badge";
 import { useEffect, useState } from "react";
 import AlertHelper from "../../helpers/alert-helper";
 
@@ -21,6 +20,7 @@ import editImage from "../../assets/edit_image.svg";
 import defaultProfile from "../../assets/default_profile.png";
 import edit from "../../assets/edit.svg";
 import LofiMoodsUser from "../../types/user";
+import UserBadge from "../misc/badge/badge";
 
 export default function Profile() {
   const [hasSentVerification, setHasSentVerification] = useState(false);
@@ -172,16 +172,8 @@ export default function Profile() {
             </div>
             <div className="user-badges">
               {user.badges !== undefined ? (
-                user.badges!.map((badge: Badge, index: number) => {
-                  return (
-                    <img
-                      className="badge"
-                      src={badge.iconsrc}
-                      alt={badge.name}
-                      title={badge.name}
-                      key={badge.id + index}
-                    />
-                  );
+                user.badges!.map((badge: string, index: number) => {
+                  return <UserBadge badge={badge} />;
                 })
               ) : (
                 <span>no badges yet</span>

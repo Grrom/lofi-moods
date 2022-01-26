@@ -1,7 +1,7 @@
 import { User } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
-import { authenticationHelper } from "../App";
+import { authenticationHelper, fireBaseHelper } from "../App";
 import { providerProps } from "../types/interfaces";
 import LofiMoodsUser from "../types/user";
 
@@ -20,7 +20,7 @@ export function useUserUpdate() {
 
 export default function UserProvider({ children }: providerProps) {
   const [user, setUser] = useState<LofiMoodsUser | null>(null);
-  function updateUser(user: User | null) {
+  async function updateUser(user: User | null) {
     if (user !== null) {
       setUser(
         () =>
@@ -35,6 +35,18 @@ export default function UserProvider({ children }: providerProps) {
       setUser(() => null);
     }
   }
+
+  useEffect(() => {
+    async function badgeUpdate() {
+      let userData = await fireBaseHelper.getSenderData(user!.id);
+      setUser((current) => {
+        current!.badges = userData?.badges;
+        return current;
+      });
+    }
+
+    if (user !== null) badgeUpdate();
+  }, [user]);
 
   useEffect(() => {
     const unsubscribe = authenticationHelper.auth.onAuthStateChanged(
