@@ -22,31 +22,21 @@ export default function UserProvider({ children }: providerProps) {
   const [user, setUser] = useState<LofiMoodsUser | null>(null);
   async function updateUser(user: User | null) {
     if (user !== null) {
+      let userData = await fireBaseHelper.getSenderData(user!.uid);
       setUser(
         () =>
           new LofiMoodsUser(
             user.displayName!,
             user.email!,
             user.uid,
-            user.emailVerified
+            user.emailVerified,
+            userData?.badges
           )
       );
     } else {
       setUser(() => null);
     }
   }
-
-  useEffect(() => {
-    async function badgeUpdate() {
-      let userData = await fireBaseHelper.getSenderData(user!.id);
-      setUser((current) => {
-        current!.badges = userData?.badges;
-        return current;
-      });
-    }
-
-    if (user !== null) badgeUpdate();
-  }, [user]);
 
   useEffect(() => {
     const unsubscribe = authenticationHelper.auth.onAuthStateChanged(
