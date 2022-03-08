@@ -19,7 +19,10 @@ export default function Mood({ mood, playMusic, isSelected }: _props) {
               "Sorry there are no music in this mood right now, please choose a different mood."
             );
           } else {
-            playMusic(musicList[0], mood);
+            playMusic(
+              musicList[Math.floor(Math.random() * (musicList.length - 0))],
+              mood
+            );
           }
         }
       }}

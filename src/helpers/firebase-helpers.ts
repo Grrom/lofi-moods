@@ -24,11 +24,7 @@ export default class FireBaseHelper {
 
   public fetchMusic = async (mood: string): Promise<Array<Music>> => {
     const querySnapshot = await getDocs(
-      query(
-        collection(this.firestore, mood),
-        orderBy("dateAdded", "desc"),
-        limit(5)
-      )
+      query(collection(this.firestore, mood), limit(10))
     );
 
     let datas: Array<Music> = [];
