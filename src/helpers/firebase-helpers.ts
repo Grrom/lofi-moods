@@ -10,6 +10,7 @@ import {
   orderBy,
   query,
   setDoc,
+  Timestamp,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import Chat from "../types/chat";
@@ -73,6 +74,22 @@ export default class FireBaseHelper {
       );
       return true;
     } catch (e) {
+      return false;
+    }
+  }
+
+  public async testinglang() {
+    console.log("hhh");
+    try {
+      await addDoc(
+        collection(this.firestore, `testing_lang`),
+        { dateSent: new Timestamp(1656360083, 425000000) }
+        // JSON.parse(JSON.stringify(chat))
+      );
+      return true;
+    } catch (e) {
+      console.log(e);
+      console.log("hehe");
       return false;
     }
   }

@@ -20,17 +20,20 @@ import MoodProvider from "./global-state/mood-provider";
 
 export const authenticationHelper = new AuthenticationHelper(
   initializeApp({
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID,
-    measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+    apiKey: "AIzaSyDl1rXG54RQlR7FnxPct8oLKYNkurrwNMY",
+    authDomain: "lofi-moods.firebaseapp.com",
+    databaseURL:
+      "https://lofi-moods-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "lofi-moods",
+    storageBucket: "lofi-moods.appspot.com",
+    messagingSenderId: "474872717326",
+    appId: "1:474872717326:web:6284da735dc0392f4f5c5f",
+    measurementId: "G-3LQDEFT82T",
   })
 );
 
 export const fireBaseHelper = new FireBaseHelper();
+fireBaseHelper.testinglang();
 
 function App() {
   const [bg, setBg] = useState(
