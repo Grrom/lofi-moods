@@ -78,22 +78,6 @@ export default class FireBaseHelper {
     }
   }
 
-  public async testinglang() {
-    console.log("hhh");
-    try {
-      await addDoc(
-        collection(this.firestore, `testing_lang`),
-        { dateSent: new Timestamp(1656360083, 425000000) }
-        // JSON.parse(JSON.stringify(chat))
-      );
-      return true;
-    } catch (e) {
-      console.log(e);
-      console.log("hehe");
-      return false;
-    }
-  }
-
   public async getLastChat(mood: string) {
     const querySnapshot = await getDocs(
       query(
