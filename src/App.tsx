@@ -33,7 +33,6 @@ export const authenticationHelper = new AuthenticationHelper(
 );
 
 export const fireBaseHelper = new FireBaseHelper();
-fireBaseHelper.testinglang();
 
 function App() {
   const [bg, setBg] = useState(
