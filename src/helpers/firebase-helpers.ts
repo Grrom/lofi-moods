@@ -10,7 +10,6 @@ import {
   orderBy,
   query,
   setDoc,
-  Timestamp,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import Chat from "../types/chat";
